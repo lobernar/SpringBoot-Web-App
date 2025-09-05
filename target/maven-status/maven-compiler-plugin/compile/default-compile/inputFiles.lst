@@ -1,2 +1,3 @@
 /home/loic/Projects/mySpringBootApp/src/main/java/com/lobernar/myapp/MyApp.java
-/home/loic/Projects/mySpringBootApp/src/main/java/com/lobernar/myapp/controllers/HomeController.java
+/home/loic/Projects/mySpringBootApp/src/main/java/com/lobernar/myapp/entities/UserEntity.java
+/home/loic/Projects/mySpringBootApp/src/main/java/com/lobernar/myapp/controllers/AuthController.java
