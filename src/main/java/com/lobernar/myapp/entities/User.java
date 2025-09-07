@@ -7,7 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class UserEntity{
+public class User{
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -19,6 +19,14 @@ public class UserEntity{
     @Column(nullable = false)
     private String password;
 
+
+    // Default Constructor
+    protected User(){}
+    // Constructor used when creating User to be saved in DB
+    public User(String username, String password){
+        this.username = username;
+        this.password = password;
+    }
 
     // Getters
     public Long getId(){return this.id;}
