@@ -1,23 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>My Spring Boot App</title>
+    <meta charset="UTF-8">
+    <title>Login / Sign Up</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <script type="module" src="login.js"></script>
 </head>
 <body>
-    <h1>Hello from Spring Boot</h1>
-
+<div id="app">
     <h2>Login</h2>
-    <form id="loginForm">
-        <input type="text" id="username" placeholder="Username" required>
-        <input type="password" id="password" placeholder="Password" required>
-        <br><br>
-        <button type="submit" id="loginBtn">Login</button>
-        <button type="button" id="signupBtn">Sign Up</button>
+    <form @submit.prevent="login">
+        <input type="text" v-model="username" placeholder="Username" required>
+        <input type="password" v-model="password" placeholder="Password" required>
+        <div style="display:flex; gap:10px;">
+            <button type="submit">Login</button>
+            <button type="button" @click="signup">Sign Up</button>
+        </div>
     </form>
-    <p id="result"></p>
-
-    <h6>Don't judge me I'm not a UI designer</h6>
-
-    <script src="login.js"></script>
+    <div id="result">{{ result }}</div>
+</div>
 </body>
 </html>

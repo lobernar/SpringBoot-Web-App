@@ -1,25 +1,53 @@
-document.addEventListener("DOMContentLoaded", () =>{
+const { createApp } = Vue;
 
-    const form = document.getElementById("loginForm");
-
-    form.addEventListener("submit", async(e) => {
-        e.preventDefault();
-
-        const username = document.getElementById("username").value;
-        const password = document.getElementById("password").value;
-
-        try {
-            const response = await fetch("/api/auth/login", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({username, password})
-            });
-
-            const text = await response.text();
-            document.getElementById("result").innerText = text
-        } catch (error) {
-            console.log("Error: " + error);
+createApp({
+    data() {
+        return {
+            username: '',
+            password: '',
+            result: ''
         }
+    },
+    methods: {
+        async login() {
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: this.username, password: this.password })
+                });
 
-    });
-})
+                const success = await response.json(); // boolean
+                if (success) {
+                    window.location.href = '/home.html';
+                } else {
+                    this.result = "Login failed!";
+                    alert("Login failed!");
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Error: ' + err);
+            }
+        },
+        async signup() {
+            try {
+                const response = await fetch('/api/auth/signup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: this.username, password: this.password })
+                });
+
+                const success = await response.json(); // boolean
+                if (success) {
+                    window.location.href = '/home.html';
+                } else {
+                    this.result = "Signup failed!";
+                    alert("Signup failed!");
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Error: ' + err);
+            }
+        }
+    }
+}).mount('#app');
