@@ -6,9 +6,10 @@ I am learning everything from scratch, without any prior knowledge of SpringBoot
 
 ## What frameworks, concepts and tools did I learn?
 
-Here is a non-exhaustive list of everythin I am learning during this project:
+Here is a non-exhaustive list of everything I am learning during this project:
 - SpringBoot
 - Maven
+- Hibernate
 - PostgreSQL
 - RESTful APIs
 - Vue.js
@@ -19,3 +20,4 @@ Here is a non-exhaustive list of everythin I am learning during this project:
 Use `mvn spring-boot:run` from the root folder.
 Once the (Tomcat) server is running, visit `http://localhost:8080` to use the web application
 or use `curl` to make HTTP requests to the server.
+
