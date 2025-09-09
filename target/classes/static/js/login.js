@@ -19,7 +19,9 @@ createApp({
 
                 const success = await response.json(); // boolean
                 if (success) {
-                    window.location.href = '/home.html';
+                    // Store username in local storage
+                    localStorage.setItem('username', this.username);
+                    window.location.href = '/dashboard.html';
                 } else {
                     this.result = "Login failed!";
                     alert("Login failed!");
@@ -39,7 +41,7 @@ createApp({
 
                 const success = await response.json(); // boolean
                 if (success) {
-                    window.location.href = '/home.html';
+                    window.location.href = '/dashboard.html';
                 } else {
                     this.result = "Signup failed!";
                     alert("Signup failed!");

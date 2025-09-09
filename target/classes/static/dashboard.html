@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <script type="module" src="js/dashboard.js"></script>
+</head>
+<body>
+    <div id="app">
+        <header>
+            <h1>Welcome, {{ user.username }}</h1>
+        </header>
+
+        <main>
+            <section class="profile-info">
+                <h2>Your Profile</h2>
+                <p><strong>User ID:</strong> {{ user.id }}</p>
+                <p><strong>Username:</strong> {{ user.username }}</p>
+            </section>
+
+            <section class="actions">
+                <button @click="logout">Logout</button>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
