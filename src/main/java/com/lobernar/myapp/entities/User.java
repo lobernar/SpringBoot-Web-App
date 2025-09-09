@@ -21,22 +21,40 @@ public class User{
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable =  false)
+    private String firstName;
+
+    @Column(nullable = false)
+    private String lastName;
+
+    @Column(nullable = false, unique = true)
+    private String email;
+
 
     // Default Constructor
     protected User(){}
     // Constructor used when creating User to be saved in DB
-    public User(String username, String password){
+    public User(String username, String password, String firstName, String lastName, String email){
         this.username = username;
         this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
     }
 
     // Getters
     public Long getId(){return this.id;}
     public String getUsername(){return this.username;}
     public String getPassword(){return this.password;}
+    public String getFirstName(){return this.firstName;}
+    public String getLastName(){return this.lastName;}
+    public String getEmail(){return this.email;}
 
     // Setters
     public void setId(Long id){this.id=id;}
     public void setUsername(String u){this.username=u;}
     public void setPassword(String p){this.password=p;}
+    public void setFirstName(String fn){this.firstName=fn;}
+    public void setLastName(String ln){this.lastName=ln;}
+    public void setEmail(String e){this.email=e;}
 }

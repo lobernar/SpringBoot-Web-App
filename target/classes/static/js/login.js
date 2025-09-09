@@ -5,6 +5,9 @@ createApp({
         return {
             username: '',
             password: '',
+            fistName: '',
+            lastName: '',
+            email: '',
             result: ''
         }
     },
@@ -14,11 +17,12 @@ createApp({
                 const response = await fetch('/api/auth/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username: this.username, password: this.password })
-                });
+                    body: JSON.stringify({ username: this.username, password: this.password, firstName: this.firstName,
+                        lastName: this.lastName, email: this.email})
+                     });
 
-                const success = await response.json(); // boolean
-                if (success) {
+                const success = await response.json(); // Long
+                if (success != -1) {
                     // Store username in local storage
                     localStorage.setItem('username', this.username);
                     window.location.href = '/dashboard.html';
@@ -32,24 +36,7 @@ createApp({
             }
         },
         async signup() {
-            try {
-                const response = await fetch('/api/auth/signup', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username: this.username, password: this.password })
-                });
-
-                const success = await response.json(); // boolean
-                if (success) {
-                    window.location.href = '/dashboard.html';
-                } else {
-                    this.result = "Signup failed!";
-                    alert("Signup failed!");
-                }
-            } catch (err) {
-                console.error(err);
-                alert('Error: ' + err);
-            }
+            window.location.href = '/signup.html'
         }
     }
 }).mount('#app');
