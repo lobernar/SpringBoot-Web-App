@@ -20,7 +20,6 @@ public class UserController {
 
     @GetMapping("me/{username}")
     public User getUser(@PathVariable("username") String username){
-        System.out.println("Username: " + username);
         return authRepo.findByUsername(username).get();
     }
 }
