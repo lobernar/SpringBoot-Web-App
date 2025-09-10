@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <title>User Dashboard</title>
     <link rel="stylesheet" href="css/dashboard.css">
+    <!-- <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script> -->
     <script type="module" src="js/dashboard.js"></script>
 </head>
 <body>
     <div id="app">
         <header>
-            <h1>Welcome, {{ user.firstName }}</h1>
+            <h1>Welcome {{ user.firstName }}!</h1>
         </header>
 
         <main>
@@ -23,9 +24,38 @@
             </section>
 
             <section class="actions">
-                <button @click="logout">Logout</button>
+                <button id="logoutBtn" @click="logout">Logout</button>
+                <button id="editBtn" @click="edit">Edit profile</button>
             </section>
         </main>
+
+        <section class="weekly-scheduler">
+            <h2>Weekly Events</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Monday</th>
+                        <th>Tuesday</th>
+                        <th>Wednesday</th>
+                        <th>Thursday</th>
+                        <th>Friday</th>
+                        <th>Saturday</th>
+                        <th>Sunday</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="hour in hours" :key="hour">
+                        <td>{{ hour }}:00</td>
+                        <td v-for="day in weekDays" :key="day">
+                            <div v-for="event in eventsForDayHour(day, hour)" :key="event.id">
+                                {{ event.title }}
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
     </div>
 </body>
 </html>

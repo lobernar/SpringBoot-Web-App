@@ -3,7 +3,7 @@ package com.lobernar.myapp.controllers;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lobernar.myapp.entities.User;
-import com.lobernar.myapp.repositories.AuthRepository;
+import com.lobernar.myapp.repositories.UserRepository;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 @RestController
 @RequestMapping("/api/users/")
 public class UserController {
-    private final AuthRepository authRepo;
+    private final UserRepository userRepo;
 
-    public UserController(final AuthRepository authRepo){
-        this.authRepo = authRepo;
+    public UserController(final UserRepository userRepo){
+        this.userRepo = userRepo;
     }
 
     @GetMapping("me/{username}")
     public User getUser(@PathVariable("username") String username){
-        return authRepo.findByUsername(username).get();
+        return userRepo.findByUsername(username).get();
     }
 }

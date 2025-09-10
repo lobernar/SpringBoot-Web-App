@@ -1,29 +1,43 @@
-import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
+import { createApp } from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
 
 createApp({
     data() {
         return {
-            user: {}
-        }
+            user: {},
+            weekDays: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],
+            hours: Array.from({ length: 13 }, (_, i) => i+8),
+            events: [] // to be fetched from backend
+        };
     },
-    async created() {
+    async mounted() {
+        const username = localStorage.getItem('username');
+
+        // Fetch user information
         try {
-            const username = localStorage.getItem('username');
-            if (!username) throw new Error("No logged-in user found");
+            const request = await fetch(`/api/users/me/${username}`);
+            if (!request.ok) throw new Error("Failed to fetch user data");
+            this.user = await request.json();
+        } catch (err) {console.error('Error fetching user:', err);}
 
-            const response = await fetch(`/api/users/me/${username}`);
-            if (!response.ok) throw new Error("Failed to fetch user data");
-
-            this.user = await response.json();
-        } catch (err) {
-            console.error('Error fetching user:', err);
-            alert('Could not load user data');
-        }
+        // Fetch events
+        // try {
+        //     const request = await fetch(`/api/events/${username}`);
+        //     if(!request.ok) throw new Error("Failed to fetch user events");
+        //     this.events = await request.json();
+        // } catch (err) {console.error('Error fetching events:', err);}
     },
     methods: {
         logout() {
             localStorage.clear();
             window.location.href = '/index.html'; // redirect to login
+        },
+
+        edit() {
+            alert("Edit profile clicked");
+        },
+
+        eventsForDayHour(day, hour) {
+
         }
     }
 }).mount('#app');

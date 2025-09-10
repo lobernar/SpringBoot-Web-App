@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.lobernar.myapp.repositories.AuthRepository;
+import com.lobernar.myapp.repositories.UserRepository;
 import com.lobernar.myapp.entities.User;
 
 @RestController
@@ -18,47 +18,47 @@ import com.lobernar.myapp.entities.User;
 public class AuthController{
 
     @Autowired
-    private final AuthRepository authRepo;
+    private final UserRepository userRepo;
 
-    public AuthController(final AuthRepository authRepo){
-        this.authRepo = authRepo;
+    public AuthController(final UserRepository userRepo){
+        this.userRepo = userRepo;
     }
 
     @GetMapping("/users")
     public Iterable<User> getAllUsers(){
-        Iterable<User> users = authRepo.findAll();
+        Iterable<User> users = userRepo.findAll();
         for(User u : users){System.out.println(u.getUsername());}
         return users;
     }
 
     @PostMapping("/login")
-    public Long login(@RequestBody Map<String, String> body) {
+    public Integer login(@RequestBody Map<String, String> body) {
         // Deserialize JSON
         String username = body.get("username");
         String password = body.get("password");
-        Optional<User> optUser = this.authRepo.findByUsername(username);
+        Optional<User> optUser = this.userRepo.findByUsername(username);
         // Check if user exists in DB
-        if(!optUser.isPresent()){return (long) -1;}
+        if(!optUser.isPresent()){return -1;}
         // Check if username-password match
         User user = optUser.get();
         if(user != null && user.getPassword().equals(password)){return user.getId();}
-        else {return (long) -1;}
+        else {return -1;}
     }
 
     @PostMapping("/signup")
-    public Long signup(@RequestBody Map<String, String> body){
+    public Integer signup(@RequestBody Map<String, String> body){
         String username = body.get("username");
         String password = body.get("password");
         String firstName = body.get("firstName");
         String lastName = body.get("lastName");
         String email = body.get("email");
-        System.out.println("Username: " + username);
+        
         User newUser = new User(username, password, firstName, lastName, email);
         // Check that no two users have the same username
-        Optional<User> optUser = this.authRepo.findByUsername(body.get("username"));
-        if(optUser.isPresent()) {return (long) -1;}
+        Optional<User> optUser = this.userRepo.findByUsername(body.get("username"));
+        if(optUser.isPresent()) {return -1;}
         // Save new user to the DB
-        this.authRepo.save(newUser);
+        this.userRepo.save(newUser);
         return newUser.getId();
     }
 }

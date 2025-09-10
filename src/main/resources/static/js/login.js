@@ -28,11 +28,9 @@ createApp({
                     window.location.href = '/dashboard.html';
                 } else {
                     this.result = "Login failed!";
-                    alert("Login failed!");
                 }
             } catch (err) {
                 console.error(err);
-                alert('Error: ' + err);
             }
         },
         async signup() {

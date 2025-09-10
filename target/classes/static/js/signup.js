@@ -27,7 +27,7 @@ createApp({
                 });
 
                 const success = await response.json();
-                if (success) {
+                if (success != -1) {
                     localStorage.setItem("username", this.username);
                     this.message = "Signup successful! Redirecting...";
                     window.location.href = "/dashboard.html";
