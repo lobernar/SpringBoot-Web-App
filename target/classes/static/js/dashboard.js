@@ -10,15 +10,6 @@ createApp({
         };
     },
     async mounted() {
-        const username = localStorage.getItem('username');
-
-        // Fetch user information
-        try {
-            const request = await fetch(`/api/users/me/${username}`);
-            if (!request.ok) throw new Error("Failed to fetch user data");
-            this.user = await request.json();
-        } catch (err) {console.error('Error fetching user:', err);}
-
         // Fetch events
         // try {
         //     const request = await fetch(`/api/events/${username}`);

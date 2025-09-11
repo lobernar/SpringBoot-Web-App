@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Profile</title>
+    <link rel="stylesheet" href="css/signup.css">
+    <script type="module" src="js/editProfile.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h1>Edit Information</h1>
+        <form @submit.prevent="edit">
+            <input type="text" v-model="firstName" placeholder="First Name" required>
+            <input type="text" v-model="lastName" placeholder="Last Name" required>
+            <input type="email" v-model="email" placeholder="Email" required>
+            <input type="text" v-model="username" placeholder="Username" required>
+            <input type="password" v-model="password" placeholder="Password" required>
+            <button type="submit" @onclick="edit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>

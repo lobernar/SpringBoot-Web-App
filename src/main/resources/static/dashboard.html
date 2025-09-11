@@ -4,31 +4,21 @@
     <meta charset="UTF-8">
     <title>User Dashboard</title>
     <link rel="stylesheet" href="css/dashboard.css">
-    <!-- <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script> -->
     <script type="module" src="js/dashboard.js"></script>
 </head>
 <body>
     <div id="app">
         <header>
-            <h1>Welcome {{ user.firstName }}!</h1>
+            <nav>
+                <ul>
+                    <li> <a href="profile.html">Profile</a></li>
+                    <li> <a href="dashboard.html">Dashboard</a></li>
+                    <li> <a href="index.html" @onclick="logout()">Logout</a></li>
+                </ul>
+            </nav>
+
+           
         </header>
-
-        <main>
-            <section class="profile-info">
-                <h2>Your Profile</h2>
-                <p><strong>User ID:</strong> {{ user.id }}</p>
-                <p><strong>First name: </strong>{{ user.firstName }}</p>
-                <p><strong>Last name: </strong>{{ user.lastName }}</p>
-                <p><strong>Username:</strong> {{ user.username }}</p>
-                <p><strong>Email: </strong>{{ user.email }}</p>
-            </section>
-
-            <section class="actions">
-                <button id="logoutBtn" @click="logout">Logout</button>
-                <button id="editBtn" @click="edit">Edit profile</button>
-            </section>
-        </main>
-
         <section class="weekly-scheduler">
             <h2>Weekly Events</h2>
             <table>

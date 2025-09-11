@@ -5,7 +5,7 @@ createApp({
         return {
             username: '',
             password: '',
-            fistName: '',
+            firstName: '',
             lastName: '',
             email: '',
             result: ''
@@ -24,7 +24,7 @@ createApp({
                 const success = await response.json(); // Long
                 if (success != -1) {
                     // Store username in local storage
-                    localStorage.setItem('username', this.username);
+                    localStorage.setItem("username", this.username);
                     window.location.href = '/dashboard.html';
                 } else {
                     this.result = "Login failed!";
