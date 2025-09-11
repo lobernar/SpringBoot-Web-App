@@ -1,8 +1,0 @@
-/home/loic/Projects/mySpringBootApp/src/main/java/com/lobernar/myapp/entities/User.java
-/home/loic/Projects/mySpringBootApp/src/main/java/com/lobernar/myapp/entities/Event.java
-/home/loic/Projects/mySpringBootApp/src/main/java/com/lobernar/myapp/repositories/UserRepository.java
-/home/loic/Projects/mySpringBootApp/src/main/java/com/lobernar/myapp/MyApp.java
-/home/loic/Projects/mySpringBootApp/src/main/java/com/lobernar/myapp/controllers/UserController.java
-/home/loic/Projects/mySpringBootApp/src/main/java/com/lobernar/myapp/controllers/AuthController.java
-/home/loic/Projects/mySpringBootApp/src/main/java/com/lobernar/myapp/controllers/EventController.java
-/home/loic/Projects/mySpringBootApp/src/main/java/com/lobernar/myapp/repositories/EventRepository.java
