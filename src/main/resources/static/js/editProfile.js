@@ -28,7 +28,6 @@ createApp({
         } catch (err) {
             alert(err);
         }
-
     },
 
     methods: {
@@ -45,19 +44,12 @@ createApp({
                         password: this.password
                     })
                 });
-
                 this.user = await response.json();
                 if (response.ok) {
                     localStorage.setItem("username", this.username);
                     window.location.href = "/dashboard.html";
-                } else {
-                    alert("error updating user");
-                }
-            } catch (err) {
-                alert(err)
-                console.error(err);
-                this.message = "Error updating user.";
-            }
+                } else {console.error("Error updating user");}
+            } catch (err) {console.error(err);}
         }
     }
 }).mount("#app");
