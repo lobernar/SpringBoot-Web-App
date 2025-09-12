@@ -7,6 +7,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+/* 
+    Defines the User table in the database. 
+*/
+
 @Entity
 @Table(name="users")
 public class User{

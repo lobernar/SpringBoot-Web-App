@@ -15,6 +15,17 @@ import org.springframework.web.bind.annotation.RestController;
 import com.lobernar.myapp.repositories.UserRepository;
 import com.lobernar.myapp.entities.User;
 
+/*
+ *  Handles user registration and login, generating JWT tokens. 
+ *  Register (/register)
+ *  Encrypts the password.
+ *  Saves the user in the database.
+ *  Returns a JWT token.
+ *  Login (/login)
+ *  Authenticates the user.
+ *  Generates and returns a JWT token.
+ */
+
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController{

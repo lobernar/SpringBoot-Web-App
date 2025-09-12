@@ -9,6 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+/* 
+    Retrieves user details based on the authenticated token. 
+*/
+
 @RestController
 @RequestMapping("/api/users/")
 public class UserController {
