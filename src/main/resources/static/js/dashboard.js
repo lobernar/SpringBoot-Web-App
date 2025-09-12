@@ -29,6 +29,10 @@ createApp({
 
         eventsForDayHour(day, hour) {
 
+        },
+
+        addEvent(){
+            prompt("Event name", "Duck"); // User jQuery
         }
     }
 }).mount('#app');
