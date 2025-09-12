@@ -34,16 +34,20 @@ public class User{
     @Column(nullable = false, unique = true)
     private String email;
 
+    @Column(nullable = false)
+    private String role;
+
 
     // Default Constructor
     protected User(){}
     // Constructor used when creating User to be saved in DB
-    public User(String username, String password, String firstName, String lastName, String email){
+    public User(String username, String password, String firstName, String lastName, String email, String role){
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.role = role;
     }
 
     // Getters
@@ -53,6 +57,7 @@ public class User{
     public String getFirstName(){return this.firstName;}
     public String getLastName(){return this.lastName;}
     public String getEmail(){return this.email;}
+    public String getRole(){return this.role;}
 
     // Setters
     public void setId(Integer id){this.id=id;}
@@ -61,4 +66,5 @@ public class User{
     public void setFirstName(String fn){this.firstName=fn;}
     public void setLastName(String ln){this.lastName=ln;}
     public void setEmail(String e){this.email=e;}
+    public void setRole(String r){this.role=r;}
 }

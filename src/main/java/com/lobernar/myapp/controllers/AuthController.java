@@ -65,8 +65,9 @@ public class AuthController{
         String firstName = body.get("firstName");
         String lastName = body.get("lastName");
         String email = body.get("email");
+        String role = body.get("role");
         
-        User newUser = new User(username, password, firstName, lastName, email);
+        User newUser = new User(username, password, firstName, lastName, email, role);
         // Check that no two users have the same username
         Optional<User> optUser = this.userRepo.findByUsername(body.get("username"));
         if(optUser.isPresent()) {return -1;}
