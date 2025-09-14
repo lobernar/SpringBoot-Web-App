@@ -5,7 +5,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 
 import com.lobernar.myapp.filter.JwtAuthFilter;
 import com.lobernar.myapp.repositories.UserRepository;
-import com.lobernar.myapp.service.UserDetailService;
+import com.lobernar.myapp.service.MyUserDetailService;
 
 /*
  *  Disables CSRF & Basic Auth.
@@ -20,9 +20,9 @@ public class SecurityConfig {
 
     private final UserRepository userRepo;
     private final JwtAuthFilter jwtFilter;
-    private final UserDetailService userDetailServ;
+    private final MyUserDetailService userDetailServ;
 
-    public SecurityConfig(final UserRepository ur, final JwtAuthFilter jaf, final UserDetailService uds){
+    public SecurityConfig(final UserRepository ur, final JwtAuthFilter jaf, final MyUserDetailService uds){
         this.userRepo = ur;
         this.jwtFilter = jaf;
         this.userDetailServ = uds;
