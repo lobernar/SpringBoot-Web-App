@@ -24,7 +24,7 @@ import io.jsonwebtoken.security.Keys;
 @Component
 public class JwtUtils {
 
-    @Value("${jwt_secret}")
+    @Value("${app.jwt.secret}")
     private String secretKey;
 
     @Value("${app.jwt.expiration}")
