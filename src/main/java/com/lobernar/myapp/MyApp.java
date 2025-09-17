@@ -2,6 +2,8 @@ package com.lobernar.myapp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import io.github.cdimascio.dotenv.Dotenv;;
 
 @SpringBootApplication
@@ -9,7 +11,9 @@ public class MyApp {
     public static void main(String[] args) {
         // Load .env before Spring context starts
         Dotenv dotenv = Dotenv.load();
-
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String hash = encoder.encode("password");
+        System.out.println("Hash: " + hash);
         // Pass .env values to Spring as system properties
         System.setProperty("app.jwt.secret", dotenv.get("JWT_SECRET"));
         System.setProperty("spring.datasource.url", dotenv.get("PSQLDB_URL"));

@@ -4,12 +4,14 @@ createApp({
     data() {
         return {
             user: {},
+            jwt: localStorage.getItem('jwt'),
             weekDays: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],
             hours: Array.from({ length: 13 }, (_, i) => i+8),
             events: [] // to be fetched from backend
         };
     },
     async mounted() {
+        console.log("JWT: " + this.jwt);
         // Fetch events
         // try {
         //     const request = await fetch(`/api/events/${username}`);

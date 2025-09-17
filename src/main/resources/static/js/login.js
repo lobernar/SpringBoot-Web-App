@@ -5,9 +5,6 @@ createApp({
         return {
             username: '',
             password: '',
-            firstName: '',
-            lastName: '',
-            email: '',
             result: ''
         }
     },
@@ -17,20 +14,21 @@ createApp({
                 const response = await fetch('/api/auth/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username: this.username, password: this.password, firstName: this.firstName,
-                        lastName: this.lastName, email: this.email})
+                    body: JSON.stringify({
+                        username: this.username,
+                        password: this.password})
                      });
-
-                const success = await response.json(); // Long
-                if (success != -1) {
-                    // Store username in local storage
-                    localStorage.setItem("username", this.username);
-                    window.location.href = '/dashboard.html';
-                } else {
-                    this.result = "Login failed!";
+                
+                if(!response.ok){
+                    this.result = "Login Failed";
+                    return;
                 }
+                const data = await response.json(); // {token: x}
+                console.log(data.jwt);
+                localStorage.setItem("jwt", data.jwt); // Store token in local storage
+                window.location.href = "/dashboard.html"; // Redirect
             } catch (err) {
-                console.error(err);
+                console.error("Could not login" + err);
             }
         },
         async signup() {

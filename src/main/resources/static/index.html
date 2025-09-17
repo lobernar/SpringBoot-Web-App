@@ -14,7 +14,7 @@
         <input type="text" v-model="username" placeholder="Username" required>
         <input type="password" v-model="password" placeholder="Password" required>
         <div style="display:flex; gap:10px;">
-            <button type="submit">Login</button>
+            <button type="submit" @click="login">Login</button>
             <button type="button" @click="signup">Sign Up</button>
         </div>
     </form>

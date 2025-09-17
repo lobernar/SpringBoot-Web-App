@@ -45,7 +45,7 @@ public class SecurityConfig {
         return http
             .csrf(csrf -> csrf.disable()) // disable CSRF for APIs
             .authorizeHttpRequests(auth -> auth // Configure endpoint authorization
-                .requestMatchers("/api/auth**","/", "/index.html", "/signup.html", "/css/**", "/js/**").permitAll() // allow login/signup without token
+                .requestMatchers("/api/auth/**","/", "/index.html", "/signup.html", "/css/**", "/js/**").permitAll() // allow login/signup without token
                 .anyRequest().authenticated()  // all other requests require auth
             )
             // Stateless session (required for JWT)
@@ -72,7 +72,8 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(HttpSecurity http, PasswordEncoder passwordEncoder) 
         throws Exception{
         AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
-        authenticationManagerBuilder.userDetailsService(userDetailServ).passwordEncoder(passwordEncoder);
+        authenticationManagerBuilder.userDetailsService(userDetailServ)
+                                    .passwordEncoder(passwordEncoder);
         return authenticationManagerBuilder.build();
     }
 
