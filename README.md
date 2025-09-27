@@ -17,8 +17,9 @@ Here is a non-exhaustive list of everything I am learning during this project:
 
 ## How to run?
 
-Use `mvn spring-boot:run` from the root folder.
-Once the (Tomcat) server is running, visit `http://localhost:8080` to use the web application
-or use `curl` in a terminal to make HTTP requests to the server.
+Use `mvn clean install` from the root folder to build the whole app.
+Then use `java -jar backend/target/backend-1.0.0.jar` to run.
+Once the (Tomcat) server is running, visit `http://localhost:8080` to use the web application or use `curl` in a terminal to make HTTP requests to the server.
+
 
 
