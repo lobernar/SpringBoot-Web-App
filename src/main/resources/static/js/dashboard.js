@@ -7,11 +7,16 @@ createApp({
             jwt: localStorage.getItem('jwt'),
             weekDays: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],
             hours: Array.from({ length: 13 }, (_, i) => i+8),
-            events: [] // to be fetched from backend
+            events: [], // to be fetched from backend
+            show: false
         };
     },
     async mounted() {
         console.log("JWT: " + this.jwt);
+        if(this.jwt == null) {
+            alert("You must log in first!");
+            window.location.href = "/index.html";
+        }
         // Fetch events
         // try {
         //     const request = await fetch(`/api/events/${username}`);
@@ -34,7 +39,8 @@ createApp({
         },
 
         addEvent(){
-            prompt("Event name", "Duck"); // User jQuery
+            console.log("Adding event");
+            this.show = !this.show;
         }
     }
 }).mount('#app');

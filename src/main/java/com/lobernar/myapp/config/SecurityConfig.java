@@ -45,8 +45,9 @@ public class SecurityConfig {
         return http
             .csrf(csrf -> csrf.disable()) // disable CSRF for APIs
             .authorizeHttpRequests(auth -> auth // Configure endpoint authorization
-                .requestMatchers("/api/auth/**","/", "/index.html", "/signup.html", "/css/**", "/js/**").permitAll() // allow login/signup without token
-                .anyRequest().authenticated()  // all other requests require auth
+                //.requestMatchers("/api/auth/**","/", "/index.html", "/signup.html", "/css/**", "/js/**").permitAll() // allow login/signup without token
+                //.anyRequest().authenticated()  // all other requests require auth
+                .anyRequest().permitAll()
             )
             // Stateless session (required for JWT)
             .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

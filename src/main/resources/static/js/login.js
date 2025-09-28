@@ -28,7 +28,7 @@ createApp({
                 localStorage.setItem("jwt", data.jwt); // Store token in local storage
                 window.location.href = "/dashboard.html"; // Redirect
             } catch (err) {
-                console.error("Could not login" + err);
+                console.error("Could not login " + err);
             }
         },
         async signup() {

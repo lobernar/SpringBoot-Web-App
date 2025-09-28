@@ -31,6 +31,8 @@ public class JwtUtils {
     private long expirationTime;
 
     public String createToken(String username){
+        System.out.println("Seret key: " + secretKey);
+        System.out.println("Expiration key: " + expirationTime);
         Map<String, Object> claims = new HashMap<>();
         return this.generateToken(claims, username);
     }

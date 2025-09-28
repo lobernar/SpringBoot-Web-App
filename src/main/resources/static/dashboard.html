@@ -7,7 +7,7 @@
     <script type="module" src="js/dashboard.js"></script>
 </head>
 <body>
-    <div id="app">
+    <div id="app" v-cloak>
         <header>
             <nav>
                 <ul>
@@ -21,7 +21,10 @@
         </header>
         <section class="weekly-scheduler">
             <h2>Weekly Events</h2>
-            <button @click="addEvent">Add Event</button>
+            <button id="addEventBtn" @click="addEvent">Add Event</button>
+              <transition name="fade">
+                <p v-if="show">Hello, I fade in and out!</p>
+              </transition>
             <table>
                 <thead>
                     <tr>
