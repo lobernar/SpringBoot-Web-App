@@ -1,2 +1,3 @@
 # Maven build folder
 target/
+.env
