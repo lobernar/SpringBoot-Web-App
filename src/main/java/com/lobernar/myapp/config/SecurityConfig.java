@@ -47,6 +47,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth // Configure endpoint authorization
                 //.requestMatchers("/api/auth/**","/", "/index.html", "/signup.html", "/css/**", "/js/**").permitAll() // allow login/signup without token
                 //.anyRequest().authenticated()  // all other requests require auth
+                .requestMatchers( "/api/users/*").authenticated()
                 .anyRequest().permitAll()
             )
             // Stateless session (required for JWT)
