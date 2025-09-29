@@ -13,7 +13,7 @@
                 <ul>
                     <li> <a href="profile.html">Profile</a></li>
                     <li> <a href="dashboard.html">Dashboard</a></li>
-                    <li> <a href="index.html" @onclick="logout()">Logout</a></li>
+                    <li> <a href="index.html" @click="logout">Logout</a></li>
                 </ul>
             </nav>
 
@@ -21,10 +21,31 @@
         </header>
         <section class="weekly-scheduler">
             <h2>Weekly Events</h2>
-            <button id="addEventBtn" @click="addEvent">Add Event</button>
-              <transition name="fade">
-                <p v-if="show">Hello, I fade in and out!</p>
-              </transition>
+            <button id="addEventBtn" @click="show = !show">Add Event</button>
+                <div v-if="show" class="overlay">
+                    <div class="eventForm">
+                        <h2>Add an event to the calendar</h2>
+                        <form @submit.prevent="addEvent">
+                            <!-- Event Name -->
+                            <label for="event-name">Event Name:</label>
+                            <input type="text" id="event-name" name="event-name" placeholder="Enter event name" required>
+
+                            <!-- Start Date -->
+                            <label for="start-date">Start Date:</label>
+                            <input type="date" id="start-date" name="start-date" required>
+
+                            <!-- End Date -->
+                            <label for="end-date">End Date:</label>
+                            <input type="date" id="end-date" name="end-date" required>
+
+                            <!-- Buttons -->
+                            <div class="buttons">
+                                <button type="submit" id="confirmBtn">Confirm</button>
+                                <button type="button" id="cancelBtn" @click="show = !show">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             <table>
                 <thead>
                     <tr>

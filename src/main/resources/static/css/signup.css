@@ -1,58 +1,70 @@
-body {
-    font-family: Arial, sans-serif;
-    background: #f4f7f8;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-}
-
+/* Sign Up Page Styling */
 #app {
-    background: white;
-    padding: 2rem;
+    max-width: 450px;
+    margin: 60px auto;
+    padding: 35px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#app h1 {
+    color: #1e3a8a;
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+#app form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#app input[type="text"],
+#app input[type="email"],
+#app input[type="password"] {
+    padding: 12px 10px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    width: 300px;
-}
-
-h1 {
-    text-align: center;
-    color: #333;
-}
-
-label {
-    display: block;
-    margin-top: 1rem;
-    font-weight: bold;
-}
-
-input {
-    width: 100%;
-    padding: 0.5rem;
-    margin-top: 0.3rem;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.2s ease;
 }
 
-button {
-    margin-top: 1.5rem;
-    width: 100%;
-    padding: 0.7rem;
-    background: #4c4caf;
-    color: white;
+#app input[type="text"]:focus,
+#app input[type="email"]:focus,
+#app input[type="password"]:focus {
+    border-color: #1e3a8a;
+    box-shadow: 0 0 5px rgba(30, 58, 138, 0.3);
+}
+
+#app button[type="submit"] {
+    padding: 12px;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
+    background-color: #1e3a8a;
+    color: white;
+    font-weight: 500;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-button:hover {
-    background: #45a049;
+#app button[type="submit"]:hover {
+    background-color: #374baf;
 }
 
-#result {
-    margin-top: 1rem;
-    text-align: center;
-    font-weight: bold;
-    color: #333;
+/* Result message */
+#result, #app p#result, #app p {
+    margin-top: 15px;
+    color: red;
+    font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+    #app {
+        margin: 40px 20px;
+        padding: 25px;
+    }
 }

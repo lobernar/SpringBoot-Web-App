@@ -1,0 +1,99 @@
+/* Body & Font */
+body {
+    background-color: #f4f6f8;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container */
+#app {
+    max-width: 700px;
+    margin: 60px auto;
+    padding: 30px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+
+/* Header */
+header h1 {
+    text-align: center;
+    color: #1e3a8a;
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+/* Profile Info Section */
+.profile-info {
+    padding: 20px;
+    border-radius: 12px;
+    background-color: #f9fafb;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+    margin-bottom: 25px;
+}
+
+.profile-info h2 {
+    color: #1e3a8a;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.profile-info p {
+    font-size: 1rem;
+    margin: 8px 0;
+}
+
+/* Action Buttons */
+.actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.actions button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Edit profile button */
+#editBtn {
+    background-color: #1e3a8a;
+    color: white;
+}
+
+#editBtn:hover {
+    background-color: #374baf;
+}
+
+/* Logout button */
+#logoutBtn {
+    background-color: #ccc;
+    color: #333;
+}
+
+#logoutBtn:hover {
+    background-color: #999;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    #app {
+        margin: 40px 20px;
+        padding: 25px;
+    }
+
+    .actions {
+        flex-direction: column;
+    }
+
+    .actions button {
+        width: 100%;
+    }
+}

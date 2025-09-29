@@ -4,11 +4,11 @@ createApp({
     data() {
         return {
             user: {},
+            show: false,
             jwt: localStorage.getItem('jwt'),
             weekDays: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],
             hours: Array.from({ length: 13 }, (_, i) => i+8),
-            events: [], // to be fetched from backend
-            show: false
+            events: [] // to be fetched from backend
         };
     },
     async mounted() {
@@ -27,6 +27,7 @@ createApp({
     methods: {
         logout() {
             localStorage.clear();
+            alert("Logging out");
             window.location.href = '/index.html'; // redirect to login
         },
 
@@ -38,9 +39,8 @@ createApp({
 
         },
 
-        addEvent(){
-            console.log("Adding event");
-            this.show = !this.show;
+        addEvent() {
+            alert("Added event");
         }
     }
 }).mount('#app');
