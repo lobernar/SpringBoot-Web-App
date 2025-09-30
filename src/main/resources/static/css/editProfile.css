@@ -1,0 +1,63 @@
+/* Edit Profile Page Styling */
+.editProfile {
+    max-width: 450px;
+    margin: 60px auto;
+    padding: 35px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.editProfile h1 {
+    color: #1e3a8a;
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+.editProfile form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.editProfile input[type="text"],
+.editProfile input[type="email"],
+.editProfile input[type="password"] {
+    padding: 12px 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.2s ease;
+}
+
+.editProfile input[type="text"]:focus,
+.editProfile input[type="email"]:focus,
+.editProfile input[type="password"]:focus {
+    border-color: #1e3a8a;
+    box-shadow: 0 0 5px rgba(30, 58, 138, 0.3);
+}
+
+.editProfile button[type="submit"] {
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: #1e3a8a;
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.editProfile button[type="submit"]:hover {
+    background-color: #374baf;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+    .editProfile {
+        margin: 40px 20px;
+        padding: 25px;
+    }
+}

@@ -40,7 +40,7 @@ export const EditProfile = {
 	}
   },
   template: `
-    <div>
+    <div class="editProfile">
       <h1>Edit Information</h1>
       <form @submit.prevent="editProfile">
         <input type="text" v-model="firstName" placeholder="First Name" required>
