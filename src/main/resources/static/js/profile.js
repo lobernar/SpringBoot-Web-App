@@ -41,10 +41,8 @@ export const Profile = {
 
     template: 
     `<div class="profile">
-        <h1>Welcome {{user.firstName}}</h1>
         <section class="profile-info">
             <h2>Your Profile</h2>
-            <p><strong>User ID:</strong> {{ user.id }}</p>
             <p><strong>First name: </strong>{{ user.firstName }}</p>
             <p><strong>Last name: </strong>{{ user.lastName }}</p>
             <p><strong>Username:</strong> {{ user.username }}</p>

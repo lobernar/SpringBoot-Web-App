@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/profile.css">
     <link rel="stylesheet" href="css/editProfile.css">
     <link rel="stylesheet" href="css/calendar.css">
+    <link rel="stylesheet" href="css/home.css">
 
     <!-- Vue global build -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -20,8 +21,9 @@
         <header>
             <nav>
                 <ul>
+                    <li><router-link class="nav-link" to="/">Home</router-link></li>
                     <li><router-link class="nav-link" to="/profile">Profile</router-link></li>
-                    <li><router-link class="nav-link" to="/">Calendar</router-link></li>
+                    <li><router-link class="nav-link" to="/calendar">Calendar</router-link></li>
                     <li><a href="#" @click="logout">Logout</a></li>
                 </ul>
             </nav>

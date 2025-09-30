@@ -2,12 +2,14 @@ import { checkJWT } from "./utils.js";
 import { EditProfile } from "./editProfile.js";
 import { Profile } from "./profile.js";
 import { Calendar } from "./calendar.js";
+import { Home } from "./home.js";
 
 const {createApp} = Vue;
 const {createRouter, createWebHashHistory} = VueRouter;
 
 const routes = [
-    { path: "/", component: Calendar, props: true },
+    { path: "/", component: Home, props: true},
+    { path: "/calendar", component: Calendar, props: true },
     { path: "/profile", component: Profile, props: true },
     { path: "/edit", component: EditProfile, props: true}
 ];
