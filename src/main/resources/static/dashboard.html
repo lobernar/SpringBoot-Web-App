@@ -13,6 +13,19 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <!-- Vue Router global build -->
     <script src="https://unpkg.com/vue-router@4/dist/vue-router.global.js"></script>
+    <!-- Vue Schedule-X Calendar build-->
+    <!-- Do not change the order of these dependencies, since some of them depend on others -->
+    <script src="https://cdn.jsdelivr.net/npm/preact@10.23.2/dist/preact.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/preact@10.23.2/hooks/dist/hooks.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@preact/signals-core@1.8.0/dist/signals-core.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@preact/signals@1.3.0/dist/signals.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/preact@10.23.2/jsx-runtime/dist/jsxRuntime.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/preact@10.23.2/compat/dist/compat.umd.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@schedule-x/calendar@2.2.0/dist/core.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@schedule-x/drag-and-drop@2.2.0/dist/core.umd.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@schedule-x/theme-default@2.2.0/dist/index.css">
 
     <script type="module" src="js/dashboard.js"></script>
 </head>
@@ -35,9 +48,11 @@
                     :weekDays="weekDays"
                     :hours="hours"
                     :events="events"
+                    :calendar="calendar"
                     @logout="logout"
                     @go_to_edit="goToEdit"
                     @update_user="updateUser"
+                    @toggle_show="toggle_show"
                     >
         </router-view>
     </div>

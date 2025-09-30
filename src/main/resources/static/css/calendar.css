@@ -3,6 +3,56 @@
     width: 100%;
 }
 
+.schedulex {
+  width: 90vw;
+  height: 90vh;
+  max-height: 90vh;
+  margin: 0 auto;
+  transform: scale(0.9);  /* shrink everything inside */
+  /*transform-origin: top left;  anchor scaling */
+}
+
+/* override Schedule-X Today button */
+.sx__today-button {
+    background-color: #f3f4f6 !important; /* your new background */
+    color: #000 !important;            /* text color */
+    border: none !important;              /* optional */
+    border-radius: 4px;                   /* optional rounded corners */
+    font-size: 14px;        /* smaller text */
+    padding: 2px 8px;       /* smaller top/bottom padding */
+    line-height: 1.2;       /* reduces height */
+    height: auto;           /* lets padding control height */
+}
+
+
+/* Default view selection button */
+.sx__view-selection-selected-item {
+    background-color: #f3f4f6; /* your desired color */
+    color: #000; /* text color */
+    font-size: 14px;        /* smaller text */
+    padding: 2px 8px;       /* smaller top/bottom padding */
+    line-height: 1.2;       /* reduces height */
+    height: auto;           /* lets padding control height */
+}
+
+.sx__view-selection-item {
+    background-color: #e0e0e0; /* default item color */
+    color: #000; 
+}
+
+/* Datepicker input field */
+.sx__date-input {
+    background-color: #f3f4f6 !important;
+    color: #000 !important;
+    font-size: 16px !important;
+    padding: 0 8px !important;       /* only horizontal padding */
+    height: 2.7rem !important;          /* match your button height */
+    line-height: 28px !important;     /* vertically center text */
+    border: none !important;
+    border-radius: 4px !important;
+    box-sizing: border-box !important;
+}
+
 /* Weekly Scheduler Section */
 .weekly-scheduler {
     width: 100%;

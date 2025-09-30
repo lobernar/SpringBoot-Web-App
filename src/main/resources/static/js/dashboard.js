@@ -6,7 +6,12 @@ import { Home } from "./home.js";
 
 const {createApp} = Vue;
 const {createRouter, createWebHashHistory} = VueRouter;
+const { createCalendar, viewWeek, viewDay, viewMonthGrid } = window.SXCalendar;
+const { createDragAndDropPlugin } = window.SXDragAndDrop;
 
+/*
+ *------------------- VueRouter Setup -------------------
+ */
 const routes = [
     { path: "/", component: Home, props: true},
     { path: "/calendar", component: Calendar, props: true },
@@ -19,6 +24,30 @@ const router = createRouter({
     routes,
 });
 
+/*
+ *------------------- Schedule-X Setup -------------------
+ */
+const plugins = [
+    createDragAndDropPlugin(),
+];
+
+const calendarX = createCalendar({
+    views: [viewWeek, viewDay, viewMonthGrid],
+    events: [
+        {
+            id: '1',
+            title: 'Event 1',
+            start: '2025-10-01 09:00',
+            end: '2025-10-30 10:00'
+        },
+    ],
+    plugins,
+});
+
+
+/*
+ *------------------- CreateApp Setup -------------------
+ */
 const app = createApp({
     data() {
         return {
@@ -27,7 +56,8 @@ const app = createApp({
             jwt: sessionStorage.getItem('jwt'),
             weekDays: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],
             hours: Array.from({ length: 13 }, (_, i) => i+8),
-            events: [] // to be fetched from backend
+            events: [], // to be fetched from backend
+            calendar: calendarX,
         };
     },
     async mounted() {
@@ -59,13 +89,9 @@ const app = createApp({
             this.user=newUser;
         },
 
-        eventsForDayHour(day, hour) {
-
+        toggle_show(){
+            this.show = !this.show;
         },
-
-        addEvent() {
-            alert("Added event");
-        }
     }
 });
 app.use(router);
