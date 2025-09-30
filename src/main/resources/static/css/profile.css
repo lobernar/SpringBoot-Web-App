@@ -1,52 +1,42 @@
-/* Body & Font */
-body {
-    background-color: #f4f6f8;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #333;
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
-}
-
-/* Container */
-#app {
-    max-width: 700px;
-    margin: 60px auto;
-    padding: 30px;
+/* Profile Page Styling scoped to .profile */
+.profile {
+    max-width: 450px;
+    margin: 15px auto;
+    padding: 35px;
     background-color: white;
     border-radius: 12px;
     box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Header */
-header h1 {
-    text-align: center;
+.profile h1 {
     color: #1e3a8a;
     margin-bottom: 25px;
     font-weight: 600;
 }
 
-/* Profile Info Section */
+/* Profile info displayed like a mini-form */
 .profile-info {
-    padding: 20px;
-    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-align: left;
+    padding: 15px;
+    border-radius: 8px;
     background-color: #f9fafb;
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+    border: 1px solid #ccc;
     margin-bottom: 25px;
-}
-
-.profile-info h2 {
-    color: #1e3a8a;
-    margin-bottom: 15px;
-    text-align: center;
+    margin-top: 0;
 }
 
 .profile-info p {
+    margin: 5px 0;
     font-size: 1rem;
-    margin: 8px 0;
+    color: #333;
 }
 
-/* Action Buttons */
+/* Action Buttons styled like signup buttons */
 .actions {
     display: flex;
     justify-content: center;
@@ -54,7 +44,7 @@ header h1 {
 }
 
 .actions button {
-    padding: 12px 20px;
+    padding: 12px;
     border: none;
     border-radius: 8px;
     font-weight: 500;
@@ -62,7 +52,7 @@ header h1 {
     transition: background-color 0.3s ease;
 }
 
-/* Edit profile button */
+/* Edit Profile Button */
 #editBtn {
     background-color: #1e3a8a;
     color: white;
@@ -72,19 +62,19 @@ header h1 {
     background-color: #374baf;
 }
 
-/* Logout button */
-#logoutBtn {
-    background-color: #ccc;
-    color: #333;
+/* Delete Profile Button */
+#deleteBtn {
+    background-color: #db1515;
+    color: white;
 }
 
-#logoutBtn:hover {
-    background-color: #999;
+#deleteBtn:hover {
+    background-color: #a50f0f;
 }
 
 /* Responsive */
-@media (max-width: 600px) {
-    #app {
+@media (max-width: 500px) {
+    #app.profile {
         margin: 40px 20px;
         padding: 25px;
     }

@@ -1,0 +1,181 @@
+/* Calendar Container */
+.calendar {
+    width: 100%;
+}
+
+/* Weekly Scheduler Section */
+.weekly-scheduler {
+    width: 100%;
+    padding: 20px;
+    background-color: #f9fafb;
+    border-radius: 12px;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+    margin-top: 20px;
+}
+
+/* Scheduler Header */
+.weekly-scheduler h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #1e3a8a;
+}
+
+/* Add Event Button */
+#addEventBtn {
+    display: block;
+    margin: 0 auto 20px auto;
+    padding: 10px 20px;
+    background-color: #1e3a8a;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+#addEventBtn:hover {
+    background-color: #374baf;
+}
+
+/* Overlay for Event Form */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Event Form Card */
+.eventForm {
+    background-color: white;
+    padding: 25px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+.eventForm h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #1e3a8a;
+}
+
+.eventForm label {
+    display: block;
+    margin: 12px 0 6px 0;
+    font-weight: 500;
+}
+
+.eventForm input[type="text"],
+.eventForm input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.eventForm input[type="text"]:focus,
+.eventForm input[type="date"]:focus {
+    border-color: #1e3a8a;
+}
+
+/* Form Buttons */
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+#confirmBtn, #cancelBtn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#confirmBtn {
+    background-color: #1e3a8a;
+    color: white;
+}
+
+#confirmBtn:hover {
+    background-color: #374baf;
+}
+
+#cancelBtn {
+    background-color: #ccc;
+    color: #333;
+}
+
+#cancelBtn:hover {
+    background-color: #999;
+}
+
+/* Calendar Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+thead {
+    background-color: #1e3a8a;
+    color: white;
+}
+
+thead th {
+    padding: 12px;
+    font-weight: 500;
+    text-align: center;
+}
+
+tbody td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #e0e0e0;
+    min-height: 50px;
+    vertical-align: top;
+}
+
+tbody td div {
+    background-color: #facc15;
+    margin: 2px 0;
+    padding: 3px 5px;
+    border-radius: 6px;
+    font-size: 0.9em;
+    color: #1e3a8a;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    table {
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 600px) {
+    .weekly-scheduler {
+        padding: 15px;
+    }
+
+    .buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .buttons button {
+        width: 100%;
+    }
+}

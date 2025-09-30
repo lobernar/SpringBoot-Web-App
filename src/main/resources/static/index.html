@@ -4,21 +4,22 @@
     <meta charset="UTF-8">
     <title>Login / Sign Up</title>
     <link rel="stylesheet" href="css/index.css">
-    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/vue-router@4/dist/vue-router.global.js"></script>
     <script type="module" src="js/login.js"></script>
 </head>
 <body>
-<div id="app">
-    <h2>Login</h2>
-    <form @submit.prevent="login">
-        <input type="text" v-model="username" placeholder="Username" required>
-        <input type="password" v-model="password" placeholder="Password" required>
-        <div style="display:flex; gap:10px;">
-            <button type="submit" @click="login">Login</button>
-            <button type="button" @click="signup">Sign Up</button>
-        </div>
-    </form>
-    <div id="result">{{ result }}</div>
-</div>
+    <div id="app">
+        <h2>Login</h2>
+        <form @submit.prevent="login">
+            <input type="text" v-model="username" placeholder="Username" required>
+            <input type="password" v-model="password" placeholder="Password" required>
+            <div style="display:flex; gap:10px;">
+                <button type="submit" @click="login">Login</button>
+                <button type="button" @click="signup">Sign Up</button>
+            </div>
+        </form>
+        <div id="result">{{ result }}</div>
+    </div>
 </body>
 </html>

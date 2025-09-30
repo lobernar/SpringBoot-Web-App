@@ -1,36 +1,58 @@
-import { createApp } from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
-import { checkJWT } from "./utils.js";
+export const Profile = { 
+    props: ['user', 'jwt'],
+    data() {
+        return {
+        firstName: this.user.firstName || '',
+        lastName: this.user.lastName || '',
+        email: this.user.email || '',
+        username: this.user.username || '',
+        password: ''
+        };
+    },
 
-createApp({
-    data(){
-        return{
-            user: {},
-            jwt: sessionStorage.getItem('jwt')
+    methods: {
+        async delete_profile(){
+            if (!confirm("Are you sure you want to delete your account? This cannot be undone.")) {
+                return;
+            }
+            try {
+                const response = await fetch("/api/users/me/delete",{
+                    method: 'DELETE',
+                    headers: {				
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${this.jwt}`
+                    }
+                });
+
+                if(!response.ok){
+                    const error = await response.text();
+                    throw new Error(error || 'Failed to delete profile');
+                }
+
+                alert("Your account has been deleted.");
+                sessionStorage.clear();
+                window.location.href = '/'; // redirect to login page
+            } catch (error) {
+                console.error("Error deleting profile:", error);
+                alert("Failed to delete account. Please try again.");
+            }
         }
     },
 
-    async mounted() {
-        checkJWT(this.jwt);
-        // Fetch user information
-        
-        try {
-            const request = await fetch(`/api/users/me/`, {
-                method: 'GET',
-                headers: { 'Authorization': `Bearer ${this.jwt}`},
-            });
-            if (!request.ok) throw new Error("Failed to fetch user data");
-            this.user = await request.json();
-        } catch (err) {console.error('Error fetching user:', err);}
-    },
-    methods: {
-        logout(){
-            sessionStorage.clear();
-            alert("Logging out");
-            window.location.href = "/";
-        },
-        edit() {
-            window.location.href = "/editProfile.html";
-        },
-    }
+    template: 
+    `<div class="profile">
+        <h1>Welcome {{user.firstName}}</h1>
+        <section class="profile-info">
+            <h2>Your Profile</h2>
+            <p><strong>User ID:</strong> {{ user.id }}</p>
+            <p><strong>First name: </strong>{{ user.firstName }}</p>
+            <p><strong>Last name: </strong>{{ user.lastName }}</p>
+            <p><strong>Username:</strong> {{ user.username }}</p>
+            <p><strong>Email: </strong>{{ user.email }}</p>
+        </section>
 
-}).mount("#app")
+        <section class="actions">
+            <button id="editBtn" @click="$emit('go_to_edit')">Edit Profile</button>
+            <button id="deleteBtn" @click="delete_profile">Delete Profile</button>
+        </section>
+    </div>`};

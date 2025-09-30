@@ -4,74 +4,40 @@
     <meta charset="UTF-8">
     <title>User Dashboard</title>
     <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/profile.css">
+    <link rel="stylesheet" href="css/signup.css">
+    <link rel="stylesheet" href="css/calendar.css">
+
+    <!-- Vue global build -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- Vue Router global build -->
+    <script src="https://unpkg.com/vue-router@4/dist/vue-router.global.js"></script>
+
     <script type="module" src="js/dashboard.js"></script>
 </head>
 <body>
-    <div id="app" v-cloak>
+    <div class="mainContainer" id="app" v-cloak>
         <header>
             <nav>
                 <ul>
-                    <li> <a href="profile.html">Profile</a></li>
-                    <li> <a href="dashboard.html">Dashboard</a></li>
-                    <li> <a href="index.html" @click="logout">Logout</a></li>
+                    <li><router-link class="nav-link" to="/profile">Profile</router-link></li>
+                    <li><router-link class="nav-link" to="/">Calendar</router-link></li>
+                    <li><a href="#" @click="logout">Logout</a></li>
                 </ul>
             </nav>
         </header>
-
-
-
-        <section class="weekly-scheduler">
-            <h2>Weekly Events</h2>
-            <button id="addEventBtn" @click="show = !show">Add Event</button>
-                <div v-if="show" class="overlay">
-                    <div class="eventForm">
-                        <h2>Add an event to the calendar</h2>
-                        <form @submit.prevent="addEvent">
-                            <!-- Event Name -->
-                            <label for="event-name">Event Name:</label>
-                            <input type="text" id="event-name" name="event-name" placeholder="Enter event name" required>
-
-                            <!-- Start Date -->
-                            <label for="start-date">Start Date:</label>
-                            <input type="date" id="start-date" name="start-date" required>
-
-                            <!-- End Date -->
-                            <label for="end-date">End Date:</label>
-                            <input type="date" id="end-date" name="end-date" required>
-
-                            <!-- Buttons -->
-                            <div class="buttons">
-                                <button type="submit" id="confirmBtn">Confirm</button>
-                                <button type="button" id="cancelBtn" @click="show = !show">Cancel</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Time</th>
-                        <th>Monday</th>
-                        <th>Tuesday</th>
-                        <th>Wednesday</th>
-                        <th>Thursday</th>
-                        <th>Friday</th>
-                        <th>Saturday</th>
-                        <th>Sunday</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="hour in hours" :key="hour">
-                        <td>{{ hour }}:00</td>
-                        <td v-for="day in weekDays" :key="day">
-                            <div v-for="event in eventsForDayHour(day, hour)" :key="event.id">
-                                {{ event.title }}
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
+        <router-view 
+                    :user="user" 
+                    :jwt="jwt"
+                    :show="show"
+                    :weekDays="weekDays"
+                    :hours="hours"
+                    :events="events"
+                    @logout="logout"
+                    @go_to_edit="goToEdit"
+                    @update_user="updateUser"
+                    >
+        </router-view>
     </div>
 </body>
 </html>

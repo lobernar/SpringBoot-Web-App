@@ -1,5 +1,5 @@
-/* Sign Up Page Styling */
-#app {
+/* Sign Up Page Styling scoped to .signup */
+#app.signup {
     max-width: 450px;
     margin: 60px auto;
     padding: 35px;
@@ -10,21 +10,21 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-#app h1 {
+#app.signup h1 {
     color: #1e3a8a;
     margin-bottom: 25px;
     font-weight: 600;
 }
 
-#app form {
+#app.signup form {
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
-#app input[type="text"],
-#app input[type="email"],
-#app input[type="password"] {
+#app.signup input[type="text"],
+#app.signup input[type="email"],
+#app.signup input[type="password"] {
     padding: 12px 10px;
     border-radius: 8px;
     border: 1px solid #ccc;
@@ -32,14 +32,14 @@
     transition: border-color 0.3s ease, box-shadow 0.2s ease;
 }
 
-#app input[type="text"]:focus,
-#app input[type="email"]:focus,
-#app input[type="password"]:focus {
+#app.signup input[type="text"]:focus,
+#app.signup input[type="email"]:focus,
+#app.signup input[type="password"]:focus {
     border-color: #1e3a8a;
     box-shadow: 0 0 5px rgba(30, 58, 138, 0.3);
 }
 
-#app button[type="submit"] {
+#app.signup button[type="submit"] {
     padding: 12px;
     border: none;
     border-radius: 8px;
@@ -50,12 +50,13 @@
     transition: background-color 0.3s ease;
 }
 
-#app button[type="submit"]:hover {
+#app.signup button[type="submit"]:hover {
     background-color: #374baf;
 }
 
-/* Result message */
-#result, #app p#result, #app p {
+/* Result message only for signup */
+#app.signup #result,
+#app.signup p#result {
     margin-top: 15px;
     color: red;
     font-weight: 500;
@@ -63,7 +64,7 @@
 
 /* Responsive */
 @media (max-width: 500px) {
-    #app {
+    #app.signup {
         margin: 40px 20px;
         padding: 25px;
     }

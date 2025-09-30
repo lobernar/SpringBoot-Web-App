@@ -1,4 +1,5 @@
 const { createApp } = Vue;
+const { createRouter, createWebHistory } = VueRouter;
 
 createApp({
     data() {
@@ -23,7 +24,7 @@ createApp({
                     this.result = "Login Failed";
                     return;
                 }
-                const data = await response.json(); // {token: x}
+                const data = await response.json(); // {token: jwt}
                 console.log(data.jwt);
                 sessionStorage.setItem("jwt", data.jwt); // Store token in local storage
                 window.location.href = "/dashboard.html"; // Redirect

@@ -25,15 +25,9 @@ createApp({
                         password: this.password
                     })
                 });
-
-                const success = await response.json();
-                if (success != -1) {
-                    localStorage.setItem("username", this.username);
-                    this.message = "Signup successful! Redirecting...";
-                    window.location.href = "/dashboard.html";
-                } else {
-                    this.message = "Username already taken!";
-                }
+                const data = await response.json(); // {token: jwt}
+                sessionStorage.setItem("jwt", data.jwt); // Store token in local storage
+                window.location.href = "/dashboard.html"; // Redirect
             } catch (err) {
                 console.error(err);
                 this.message = "Error during signup.";

@@ -1,7 +1,23 @@
-import { createApp } from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
 import { checkJWT } from "./utils.js";
+import { EditProfile } from "./editProfile.js";
+import { Profile } from "./profile.js";
+import { Calendar } from "./calendar.js";
 
-createApp({
+const {createApp} = Vue;
+const {createRouter, createWebHashHistory} = VueRouter;
+
+const routes = [
+    { path: "/", component: Calendar, props: true },
+    { path: "/profile", component: Profile, props: true },
+    { path: "/edit", component: EditProfile, props: true}
+];
+
+const router = createRouter({
+    history: createWebHashHistory(),
+    routes,
+});
+
+const app = createApp({
     data() {
         return {
             user: {},
@@ -14,6 +30,16 @@ createApp({
     },
     async mounted() {
         checkJWT(this.jwt);
+        // Fetch user information
+        try {
+            const request = await fetch(`/api/users/me/`, {
+                method: 'GET',
+                headers: { 'Authorization': `Bearer ${this.jwt}`},
+            });
+            if (!request.ok) throw new Error("Failed to fetch user data");
+            this.user = await request.json();
+        } catch (err) {console.error('Error fetching user:', err);}
+        console.log("Username: " + this.user.username);
         // Fetch events
     },
     methods: {
@@ -23,8 +49,12 @@ createApp({
             window.location.href = "/";
         },
 
-        edit() {
-            alert("Edit profile clicked");
+        goToEdit() {
+            this.$router.push("edit");
+        },
+
+        updateUser(newUser){
+            this.user=newUser;
         },
 
         eventsForDayHour(day, hour) {
@@ -35,4 +65,6 @@ createApp({
             alert("Added event");
         }
     }
-}).mount('#app');
+});
+app.use(router);
+app.mount('#app');
