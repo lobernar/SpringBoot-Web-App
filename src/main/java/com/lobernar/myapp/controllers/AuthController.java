@@ -10,9 +10,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -68,20 +66,20 @@ public class AuthController{
     }
 
     @PostMapping("/signup")
-    public User signup(@RequestBody Map<String, String> body){
+    public ResponseEntity<?> signup(@RequestBody Map<String, String> body){
         String username = body.get("username");
         String password = body.get("password");
         String firstName = body.get("firstName");
         String lastName = body.get("lastName");
         String email = body.get("email");
         
+        // Encode Password and add user to User Repository
         User newUser = new User(username, password, firstName, lastName, email);
-        return this.userService.addUser(newUser);
-    }
+        this.userService.addUser(newUser);
 
-    // TODO: Put this in UserRepository
-    @PutMapping("/edit/{username}")
-    public User updateUserInfo(@PathVariable("username") String username,@RequestBody User u){
-        return this.userService.updateUser(u);
+        // Generate JWT
+        String token = this.jwtUtils.createToken(username);
+
+        return ResponseEntity.ok(Map.of("jwt", token));
     }
 }
