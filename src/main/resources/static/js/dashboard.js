@@ -33,14 +33,7 @@ const plugins = [
 
 const calendarX = createCalendar({
     views: [viewWeek, viewDay, viewMonthGrid],
-    events: [
-        {
-            id: '1',
-            title: 'Event 1',
-            start: '2025-10-01 09:00',
-            end: '2025-10-30 10:00'
-        },
-    ],
+    events: [],
     plugins,
 });
 
@@ -54,12 +47,11 @@ const app = createApp({
             user: {},
             show: false,
             jwt: sessionStorage.getItem('jwt'),
-            weekDays: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],
-            hours: Array.from({ length: 13 }, (_, i) => i+8),
             events: [], // to be fetched from backend
             calendar: calendarX,
         };
     },
+
     async mounted() {
         checkJWT(this.jwt);
         // Fetch user information
@@ -73,7 +65,9 @@ const app = createApp({
         } catch (err) {console.error('Error fetching user:', err);}
         console.log("Username: " + this.user.username);
         // Fetch events
+        this.fetchEvents();
     },
+
     methods: {
         logout(){
             sessionStorage.clear();
@@ -89,8 +83,28 @@ const app = createApp({
             this.user=newUser;
         },
 
-        toggle_show(){
+        async fetchEvents(){
+            const response = await fetch("/api/events/me", {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+				    'Authorization': `Bearer ${this.jwt}`
+                },
+            });
+            if(!response.ok) throw new Error("Unable to fetch user events");
+            this.events = await response.json();
+            console.log("Fetched Events: " + this.events);
+        },
+
+        toggleShow(){
             this.show = !this.show;
+        },
+
+        addEvent(newEvent){
+            alert("Dashboard: adding event");
+            this.events.push(newEvent);
+            this.fetchEvents();
+            this.calendar.events=this.events;
         },
     }
 });

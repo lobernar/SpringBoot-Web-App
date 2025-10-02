@@ -56,6 +56,7 @@ public class AuthController{
         try {
             Authentication auth = this.authManager.authenticate(authToken);
             SecurityContextHolder.getContext().setAuthentication(auth);
+            // Generate JWT
             String token = jwtUtils.createToken(username);
             return ResponseEntity.ok(Map.of("jwt", token));
         } catch (AuthenticationException e) {

@@ -1,18 +1,45 @@
 export const Calendar = { 
-    props: ['weekDays', 'show', 'hours', 'events', 'calendar'],
+    props: ['show', 'events', 'calendar', 'jwt'],
+    data() {
+        return {
+            eventName: 'test',
+            eventStart: '',
+            eventEnd: '', 
+        };
+    },
+
     mounted(){
-        if(this.calendar){
-            this.calendar.render(this.$refs.calendarContainer);
-        }
+        this.renderCalendar();
     },
     methods: {
-        eventsForDayHour(day, hour) {
-            return this.events.filter(ev => ev.day === day && ev.hour === hour);
+        async renderCalendar(){
+            if(this.calendar){
+                console.log("CalendarJS Events: " + this.events);
+                this.calendar.render(this.$refs.calendarContainer);
+            }
         },
 
         async addEvent(){
             alert("Adding event");
+            const response = await fetch('/api/events/me/post', {
+                method: 'POST',
+                headers:{
+                    'Content-Type': 'application/json',
+				    'Authorization': `Bearer ${this.jwt}`
+                },
+                body: JSON.stringify({
+                    eventName: this.eventName,
+                    eventStart: this.eventStart,
+                    eventEnd: this.eventEnd
+                })
+            });
+            if (!response.ok) throw new Error("Failed to add new event");
+            const newEvent = await response.json();
+            // Add event to array
+            this.$emit('add_event', newEvent);
+            // Close popup and reload calendar
             this.$emit('toggle_show');
+            this.renderCalendar();
         }
 
     },
@@ -27,15 +54,15 @@ export const Calendar = {
                     <form @submit.prevent="addEvent">
                         <!-- Event Name -->
                         <label for="event-name">Event Name:</label>
-                        <input type="text" id="event-name" name="event-name" placeholder="Enter event name" required>
+                        <input type="text" id="event-name" name="event-name" v-model:="eventName" placeholder="Enter event name" required>
 
                         <!-- Start Date -->
                         <label for="start-date">Start Date:</label>
-                        <input type="datetime-local" id="start-date" name="start-date" required>
+                        <input type="datetime-local" id="start-date" name="start-date" v-model="eventStart" required>
 
                         <!-- End Date -->
                         <label for="end-date">End Date:</label>
-                        <input type="datetime-local" id="end-date" name="end-date" required>
+                        <input type="datetime-local" id="end-date" name="end-date" v-model="eventEnd" required>
 
                         <!-- Buttons -->
                         <div class="buttons">

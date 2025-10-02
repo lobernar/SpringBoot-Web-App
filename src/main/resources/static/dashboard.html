@@ -45,14 +45,13 @@
                     :user="user" 
                     :jwt="jwt"
                     :show="show"
-                    :weekDays="weekDays"
-                    :hours="hours"
                     :events="events"
                     :calendar="calendar"
                     @logout="logout"
                     @go_to_edit="goToEdit"
                     @update_user="updateUser"
-                    @toggle_show="toggle_show"
+                    @toggle_show="toggleShow"
+                    @add_event="addEvent"
                     >
         </router-view>
     </div>
