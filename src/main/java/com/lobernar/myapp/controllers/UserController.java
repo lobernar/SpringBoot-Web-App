@@ -2,6 +2,7 @@ package com.lobernar.myapp.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.lobernar.myapp.config.JwtUtils;
 import com.lobernar.myapp.entities.User;
 import com.lobernar.myapp.repositories.UserRepository;
 
@@ -31,10 +32,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class UserController {
     private final UserRepository userRepo;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtils jwtUtils;
 
-    public UserController(final UserRepository userRepo, final PasswordEncoder pe){
+    public UserController(final UserRepository userRepo, final PasswordEncoder pe, final JwtUtils ju){
         this.userRepo = userRepo;
         this.passwordEncoder = pe;
+        this.jwtUtils = ju;
     }
 
     @GetMapping("me/")
@@ -50,7 +53,7 @@ public class UserController {
     }
 
     @PutMapping("me/edit")
-    public ResponseEntity<User> updateUser(@RequestBody Map<String, String> body){
+    public ResponseEntity<?> updateUser(@RequestBody Map<String, String> body){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if(auth == null || !auth.isAuthenticated()){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -58,7 +61,6 @@ public class UserController {
         UserDetails userDetails = (UserDetails) auth.getPrincipal();
         User userToUpdate = userRepo.findByUsername(userDetails.getUsername()).orElseThrow(
             () -> new UsernameNotFoundException("User not found"));
-        
         // Update fields if present in the map
         if(body.containsKey("firstName")) userToUpdate.setFirstName(body.get("firstName"));
         if(body.containsKey("lastName")) userToUpdate.setLastName(body.get("lastName"));
@@ -70,7 +72,8 @@ public class UserController {
         }
         
         User updatedUser = userRepo.save(userToUpdate);
-        return ResponseEntity.ok(userRepo.save(updatedUser));
+        String newToken = this.jwtUtils.createToken(updatedUser.getId());
+        return ResponseEntity.ok(Map.of("jwt", newToken));
     }
 
     @DeleteMapping("me/delete")

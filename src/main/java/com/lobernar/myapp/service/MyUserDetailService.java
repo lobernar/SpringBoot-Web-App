@@ -24,6 +24,14 @@ public class MyUserDetailService implements UserDetailsService{
         this.userRepo = ur;
     }
 
+    // Load user details by id
+    public UserDetails loadUserById(Integer userId) throws UsernameNotFoundException {
+        User user = userRepo.findById(userId)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with ID: " + userId));
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
+                    Collections.singletonList(new SimpleGrantedAuthority(user.getRole())));
+    }
+
     // Load user details by username
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

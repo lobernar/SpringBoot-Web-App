@@ -67,16 +67,11 @@ const app = createApp({
         checkJWT(this.jwt);
         // Fetch user information
         try {
-            const request = await fetch(`/api/users/me/`, {
-                method: 'GET',
-                headers: { 'Authorization': `Bearer ${this.jwt}`},
-            });
-            if (!request.ok) throw new Error("Failed to fetch user data");
-            this.user = await request.json();
+            await this.fetchUser();
         } catch (error) {
             console.error('Error fetching user:', error);
         }
-        console.log("Username: " + this.user.username);
+        console.log("Dashboard Username: " + this.user.username);
         // Fetch events
         try {
             await this.fetchEvents();  
@@ -86,6 +81,15 @@ const app = createApp({
     },
 
     methods: {
+        async fetchUser(){
+            const request = await fetch(`/api/users/me/`, {
+                method: 'GET',
+                headers: { 'Authorization': `Bearer ${this.jwt}`},
+            });
+            if (!request.ok) throw new Error("Failed to fetch user data");
+            this.user = await request.json();
+        },
+
         async fetchEvents(){
             const response = await fetch("/api/events/me", {
                 method: 'GET',
@@ -137,8 +141,14 @@ const app = createApp({
             this.$router.push("edit");
         },
 
-        updateUser(newUser){
-            this.user=newUser;
+        updateUser(newJwt){
+            try{
+                this.jwt=newJwt; // Update JWT
+                console.log("New JWT: ", this.jwt);
+                
+                this.fetchUser();
+                console.log("Username: " + this.user.username);
+            } catch (error) {console.error('Error fetching user:', error);}
         },
 
         toggleShow(){

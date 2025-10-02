@@ -39,18 +39,18 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         @NonNull FilterChain filterChain)
     throws ServletException, IOException {
         final String authHeader = request.getHeader("Authorization");
-        String username = null;
+        Integer userId = null;
         String jwt = null;
 
-        // Extract username from JWT using JwtUtils
+        // Extract userId from JWT using JwtUtils
         if(authHeader != null && authHeader.startsWith("Bearer ")){
             jwt = authHeader.substring(7); // JWT begins at index 7
-            username = jwtUtils.extractUsername(jwt);
+            userId = jwtUtils.extractUserId(jwt);
         }
 
-        if(username != null && SecurityContextHolder.getContext().getAuthentication() == null){
-            UserDetails userDetails = myUserDetailService.loadUserByUsername(username);
-            if(jwtUtils.validateToken(jwt, userDetails)){
+        if(userId != null && SecurityContextHolder.getContext().getAuthentication() == null){
+            UserDetails userDetails = myUserDetailService.loadUserById(userId);
+            if(jwtUtils.validateToken(jwt, userId)){
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                     userDetails, 
                     null, 

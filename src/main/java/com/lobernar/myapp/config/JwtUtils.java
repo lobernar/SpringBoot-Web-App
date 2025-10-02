@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Claims;
@@ -30,15 +29,15 @@ public class JwtUtils {
     @Value("${app.jwt.expiration}")
     private long expirationTime;
 
-    public String createToken(String username){
+    public String createToken(Integer userId){
         Map<String, Object> claims = new HashMap<>();
-        return this.generateToken(claims, username);
+        return this.generateToken(claims, userId);
     }
     
-    public String generateToken(Map<String, Object> claims, String username) {
+    public String generateToken(Map<String, Object> claims, Integer userId) {
         return Jwts.builder()
             .setClaims(claims)
-            .setSubject(username)
+            .setSubject(userId.toString())
             .setIssuedAt(new Date())
             .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
             .signWith(getSignKey(), SignatureAlgorithm.HS256)
@@ -63,8 +62,9 @@ public class JwtUtils {
         return claimResolver.apply(claims);
     }
 
-    public String extractUsername(String token){
-        return extractClaim(token, Claims::getSubject);
+    public Integer extractUserId(String token){
+        String subject = extractClaim(token, Claims::getSubject);
+        return Integer.valueOf(subject);
     }
 
     public Date extractExpiration(String token){
@@ -75,8 +75,8 @@ public class JwtUtils {
         return extractExpiration(token).before(new Date());
     }
 
-    public Boolean validateToken(String token, UserDetails ud){
-        final String username = extractUsername(token);
-        return (username.equals(ud.getUsername()) && !isTokenExpired(token));
+    public Boolean validateToken(String token, Integer userId){
+        Integer tokenUserId = extractUserId(token);
+        return (tokenUserId.equals(userId) && !isTokenExpired(token));
     }
 }

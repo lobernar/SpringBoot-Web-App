@@ -27,10 +27,10 @@ export const EditProfile = {
 				password: this.password
 			})
 		});
-		if (!request.ok) throw new Error("Failed to fetch user data");
-		const updatedUser = await request.json();
+		if (!request.ok) throw new Error("Failed to update user data");
+		const data = await request.json();
 		// Update user in root script
-		this.$emit('update_user', updatedUser);
+		await this.$emit('update_user', data.jwt);
 		// Redirect to calendar after successful update
 		this.$router.push('/');
 		

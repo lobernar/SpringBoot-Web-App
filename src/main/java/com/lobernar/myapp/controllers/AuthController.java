@@ -1,6 +1,7 @@
 package com.lobernar.myapp.controllers;
 
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -57,7 +58,13 @@ public class AuthController{
             Authentication auth = this.authManager.authenticate(authToken);
             SecurityContextHolder.getContext().setAuthentication(auth);
             // Generate JWT
-            String token = jwtUtils.createToken(username);
+            Optional<User> optUser = this.userService.findByUsername(username);
+            if(!optUser.isPresent()) {
+                System.out.println("User not present");
+                return null;
+            }
+            User user = optUser.get();
+            String token = jwtUtils.createToken(user.getId());
             return ResponseEntity.ok(Map.of("jwt", token));
         } catch (AuthenticationException e) {
             System.out.println("Authentication failed: " + e.getMessage());
@@ -79,7 +86,7 @@ public class AuthController{
         this.userService.addUser(newUser);
 
         // Generate JWT
-        String token = this.jwtUtils.createToken(username);
+        String token = this.jwtUtils.createToken(newUser.getId());
 
         return ResponseEntity.ok(Map.of("jwt", token));
     }
