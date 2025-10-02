@@ -31,9 +31,20 @@ const plugins = [
     createDragAndDropPlugin(),
 ];
 
-const calendarX = createCalendar({
+let calendarX = createCalendar({
     views: [viewWeek, viewDay, viewMonthGrid],
-    events: [],
+    events: [
+        {
+          // end: "2025-10-04 10:10"
+          // id: "1"
+          // start: "2025-10-03 10:10"
+          // title: "test3"
+          id: "2",
+          title: "Event 1",
+          start: "2025-10-03 09:00", 
+          end: "2025-10-03 10:00"
+        },
+    ],
     plugins,
 });
 
@@ -62,13 +73,60 @@ const app = createApp({
             });
             if (!request.ok) throw new Error("Failed to fetch user data");
             this.user = await request.json();
-        } catch (err) {console.error('Error fetching user:', err);}
+        } catch (error) {
+            console.error('Error fetching user:', error);
+        }
         console.log("Username: " + this.user.username);
         // Fetch events
-        this.fetchEvents();
+        try {
+            await this.fetchEvents();  
+        } catch (error) {
+            console.error('Error fetching events:', error);
+        }        
     },
 
     methods: {
+        async fetchEvents(){
+            const response = await fetch("/api/events/me", {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+				    'Authorization': `Bearer ${this.jwt}`
+                },
+            });
+            if(!response.ok) throw new Error("Unable to fetch user events");
+            const rawEvents= await response.json();
+            // Transform API events into Schedule-X format
+            this.events = rawEvents.map(e => ({
+                id: e.id.toString(),              // must be a string
+                title: e.name,                    // Schedule-X uses "title"
+                start: e.startDate.replace('T', ' ').slice(0,16), // 'YYYY-MM-DD HH:mm'
+                end: e.endDate.replace('T', ' ').slice(0,16)
+            }));
+        },
+
+        async renderCalendar(){
+            try {
+                console.log("render calendar called");
+                if(this.calendar){
+                    const container = document.querySelector(".schedulex");
+                    if (!container) {
+                        console.warn("Calendar container not ready yet");
+                        return;
+                    }
+                    this.calendar = createCalendar({
+                        views: [viewWeek, viewDay, viewMonthGrid],
+                        events: this.events,
+                        plugins,
+                    });
+                    this.calendar.render(container);
+                }    
+            } catch (error) {
+                console.error('Error rendering calendar:', error);
+            }
+
+        },
+
         logout(){
             sessionStorage.clear();
             alert("Logging out");
@@ -83,28 +141,14 @@ const app = createApp({
             this.user=newUser;
         },
 
-        async fetchEvents(){
-            const response = await fetch("/api/events/me", {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-				    'Authorization': `Bearer ${this.jwt}`
-                },
-            });
-            if(!response.ok) throw new Error("Unable to fetch user events");
-            this.events = await response.json();
-            console.log("Fetched Events: " + this.events);
-        },
-
         toggleShow(){
             this.show = !this.show;
         },
 
-        addEvent(newEvent){
-            alert("Dashboard: adding event");
+        async addEvent(newEvent){
             this.events.push(newEvent);
-            this.fetchEvents();
-            this.calendar.events=this.events;
+            await this.fetchEvents();
+            await this.calendar.render(document.querySelector(".schedulex"));
         },
     }
 });

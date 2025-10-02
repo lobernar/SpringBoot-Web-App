@@ -46,7 +46,7 @@
                     :jwt="jwt"
                     :show="show"
                     :events="events"
-                    :calendar="calendar"
+                    @render_calendar="renderCalendar"
                     @logout="logout"
                     @go_to_edit="goToEdit"
                     @update_user="updateUser"

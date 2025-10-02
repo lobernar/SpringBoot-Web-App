@@ -1,5 +1,5 @@
 export const Calendar = { 
-    props: ['show', 'events', 'calendar', 'jwt'],
+    props: ['show', 'events', 'jwt'],
     data() {
         return {
             eventName: 'test',
@@ -9,18 +9,13 @@ export const Calendar = {
     },
 
     mounted(){
-        this.renderCalendar();
+        this.$nextTick(async () => {
+            await this.$emit('render_calendar');
+        });
     },
-    methods: {
-        async renderCalendar(){
-            if(this.calendar){
-                console.log("CalendarJS Events: " + this.events);
-                this.calendar.render(this.$refs.calendarContainer);
-            }
-        },
 
+    methods: {
         async addEvent(){
-            alert("Adding event");
             const response = await fetch('/api/events/me/post', {
                 method: 'POST',
                 headers:{
@@ -39,7 +34,6 @@ export const Calendar = {
             this.$emit('add_event', newEvent);
             // Close popup and reload calendar
             this.$emit('toggle_show');
-            this.renderCalendar();
         }
 
     },
