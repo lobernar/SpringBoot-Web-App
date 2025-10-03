@@ -1,16 +1,16 @@
 package com.lobernar.myapp.entities;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 public class EventDTO {
     private Integer id;
     private String owner;  // just the username
     private String name;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private ZonedDateTime startDate;
+    private ZonedDateTime endDate;
 
     // Constructors
-    public EventDTO(Integer id, String name, String ownerUsername, LocalDateTime startDate, LocalDateTime endDate) {
+    public EventDTO(Integer id, String name, String ownerUsername, ZonedDateTime startDate, ZonedDateTime endDate) {
         this.id = id;
         this.owner = ownerUsername;
         this.name = name;
@@ -25,13 +25,13 @@ public class EventDTO {
     public Integer getId() {return id;}
     public String getOwner() {return owner;}
     public String getName() {return name;}
-    public LocalDateTime getStartDate() {return startDate;}
-    public LocalDateTime getEndDate() {return endDate;}
+    public ZonedDateTime getStartDate() {return startDate;}
+    public ZonedDateTime getEndDate() {return endDate;}
 
     // Setters
     public void setId(Integer id) {this.id = id;}
     public void setOwner(String owner) {this.owner = owner;}
     public void setName(String name) {this.name = name;}
-    public void setStartDate(LocalDateTime startDate) {this.startDate = startDate;}
-    public void setEndDate(LocalDateTime endDate) {this.endDate = endDate;}
+    public void setStartDate(ZonedDateTime startDate) {this.startDate = startDate;}
+    public void setEndDate(ZonedDateTime endDate) {this.endDate = endDate;}
 }

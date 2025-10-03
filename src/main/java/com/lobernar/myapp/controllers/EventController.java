@@ -1,6 +1,8 @@
 package com.lobernar.myapp.controllers;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
@@ -46,7 +48,6 @@ public class EventController {
         String username = userDetails.getUsername();
         User user = userRepo.findByUsername(username)
             .orElseThrow(() -> new RuntimeException("User not found"));
-        
         return ResponseEntity.ok(eventRepo.findDTOsByOwner(user));
     }
     
@@ -68,9 +69,14 @@ public class EventController {
         String eventStartString = body.get("eventStart");
         String eventEndString = body.get("eventEnd");
 
-        // Convert String to LocalDataTime
-        LocalDateTime eventStart = LocalDateTime.parse(eventStartString, DateTimeFormatter.ISO_DATE_TIME);
-        LocalDateTime eventEnd = LocalDateTime.parse(eventEndString, DateTimeFormatter.ISO_DATE_TIME);
+        // Convert String to ZonedDateTime
+        // Parse the LocalDateTime first
+        LocalDateTime startLocal = LocalDateTime.parse(eventStartString, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        LocalDateTime endLocal = LocalDateTime.parse(eventEndString, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+
+        // Convert to ZonedDateTime
+        ZonedDateTime eventStart = startLocal.atZone(ZoneOffset.UTC);
+        ZonedDateTime eventEnd = endLocal.atZone(ZoneOffset.UTC);
 
         Event event = new Event(user, eventName, eventStart, eventEnd);
         event = this.eventRepo.save(event);

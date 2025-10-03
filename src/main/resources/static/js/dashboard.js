@@ -8,6 +8,7 @@ const {createApp} = Vue;
 const {createRouter, createWebHashHistory} = VueRouter;
 const { createCalendar, viewWeek, viewDay, viewMonthGrid } = window.SXCalendar;
 const { createDragAndDropPlugin } = window.SXDragAndDrop;
+const {createEventsServicePlugin } = window.SXEventsService;
 
 /*
  *------------------- VueRouter Setup -------------------
@@ -27,24 +28,17 @@ const router = createRouter({
 /*
  *------------------- Schedule-X Setup -------------------
  */
+
+const eventsServicePlugin = createEventsServicePlugin();
+const dragAndDropPlugin = createDragAndDropPlugin();
+
 const plugins = [
-    createDragAndDropPlugin(),
+    eventsServicePlugin,
+    dragAndDropPlugin,
 ];
 
 let calendarX = createCalendar({
     views: [viewWeek, viewDay, viewMonthGrid],
-    events: [
-        {
-          // end: "2025-10-04 10:10"
-          // id: "1"
-          // start: "2025-10-03 10:10"
-          // title: "test3"
-          id: "2",
-          title: "Event 1",
-          start: "2025-10-03 09:00", 
-          end: "2025-10-03 10:00"
-        },
-    ],
     plugins,
 });
 
@@ -71,13 +65,13 @@ const app = createApp({
         } catch (error) {
             console.error('Error fetching user:', error);
         }
-        console.log("Dashboard Username: " + this.user.username);
         // Fetch events
         try {
-            await this.fetchEvents();  
+            await this.fetchEvents();
         } catch (error) {
             console.error('Error fetching events:', error);
-        }        
+        }
+        await this.renderCalendar();
     },
 
     methods: {
@@ -100,31 +94,23 @@ const app = createApp({
             });
             if(!response.ok) throw new Error("Unable to fetch user events");
             const rawEvents= await response.json();
+            
             // Transform API events into Schedule-X format
             this.events = rawEvents.map(e => ({
-                id: e.id.toString(),              // must be a string
-                title: e.name,                    // Schedule-X uses "title"
-                start: e.startDate.replace('T', ' ').slice(0,16), // 'YYYY-MM-DD HH:mm'
-                end: e.endDate.replace('T', ' ').slice(0,16)
+                id: e.id, 
+                title: e.name,
+                start: Temporal.ZonedDateTime.from(e.startDate + "[Europe/Berlin]"),
+                end: Temporal.ZonedDateTime.from(e.endDate + "[Europe/Berlin]")
             }));
         },
 
         async renderCalendar(){
-            try {
-                console.log("render calendar called");
-                if(this.calendar){
-                    const container = document.querySelector(".schedulex");
-                    if (!container) {
-                        console.warn("Calendar container not ready yet");
-                        return;
-                    }
-                    this.calendar = createCalendar({
-                        views: [viewWeek, viewDay, viewMonthGrid],
-                        events: this.events,
-                        plugins,
-                    });
-                    this.calendar.render(container);
-                }    
+            try {;
+                // Render the calendar first
+                await this.calendar.render(document.querySelector(".schedulex"));
+                // Use calendar.eventsService to add events
+                this.calendar.eventsService.set(this.events);
+                // Access it via calendar.eventsService
             } catch (error) {
                 console.error('Error rendering calendar:', error);
             }
@@ -143,11 +129,8 @@ const app = createApp({
 
         updateUser(newJwt){
             try{
-                this.jwt=newJwt; // Update JWT
-                console.log("New JWT: ", this.jwt);
-                
+                this.jwt=newJwt; // Update JWT                
                 this.fetchUser();
-                console.log("Username: " + this.user.username);
             } catch (error) {console.error('Error fetching user:', error);}
         },
 
@@ -156,9 +139,8 @@ const app = createApp({
         },
 
         async addEvent(newEvent){
-            this.events.push(newEvent);
             await this.fetchEvents();
-            await this.calendar.render(document.querySelector(".schedulex"));
+            this.calendar.eventsService.set(this.events)
         },
     }
 });

@@ -1,9 +1,7 @@
 package com.lobernar.myapp.entities;
 
 
-import java.time.LocalDateTime;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.ZonedDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -35,16 +33,14 @@ public class Event {
     private String name; // event name
 
     @Column
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
-    private LocalDateTime startDate;
+    private ZonedDateTime startDate;
 
     @Column
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
-    private LocalDateTime endDate;
+    private ZonedDateTime endDate;
 
     // Constructors
     public Event(){};
-    public Event(User owner, String name, LocalDateTime sd, LocalDateTime ed){
+    public Event(User owner, String name, ZonedDateTime sd, ZonedDateTime ed){
         this.owner = owner;
         this.name = name;
         this.startDate = sd;
@@ -57,13 +53,13 @@ public class Event {
     public Integer getId() {return this.id;}
     public User getOwner() {return this.owner;}
     public String getName() {return this.name;}
-    public LocalDateTime getStartDate() {return this.startDate;}
-    public LocalDateTime getEndDate() {return this.endDate;}
+    public ZonedDateTime getStartDate() {return this.startDate;}
+    public ZonedDateTime getEndDate() {return this.endDate;}
 
     // Setters
     public void setId(Integer id) {this.id=id;}
     public void setOwner(User o) {this.owner=o;}
     public void setName(String n) {this.name=n;}
-    public void setStartDate(LocalDateTime sd) {this.startDate=sd;}
-    public void setEndDate(LocalDateTime ed) {this.endDate=ed;}
+    public void setStartDate(ZonedDateTime sd) {this.startDate=sd;}
+    public void setEndDate(ZonedDateTime ed) {this.endDate=ed;}
 }
