@@ -8,7 +8,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.lobernar.myapp.entities.User;
@@ -44,16 +43,4 @@ public class MyUserDetailService implements UserDetailsService{
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
                     Collections.singletonList(new SimpleGrantedAuthority(user.getRole())));
     }
-
-    /*
-     *  Add any additional methods for registering or managing users
-     */
-    // public String addUser(User user){
-    //     // Encrypt password before saving
-    //     String encPass = passwordEncoder.encode(user.getPassword());
-    //     user.setPassword(encPass);
-    //     this.userRepo.save(user);
-    //     return "User added successfully";
-    // }
-    
 }
