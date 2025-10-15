@@ -39,9 +39,10 @@ export const Calendar = {
     },
     template: 
     `<div class="calendar">   
-        <section class="weekly-scheduler">
-            <h2>Planned Events</h2>
+        <div class="schedulex" ref="calendarContainer">
             <button id="addEventBtn" @click="$emit('toggle_show')">Add Event</button>
+        </div>
+        <section class="weekly-scheduler">
             <div v-if="show" class="overlay">
                 <div class="eventForm">
                     <h2>Add an event to the calendar</h2>
@@ -67,7 +68,6 @@ export const Calendar = {
                 </div>
             </div>
         </section>
-        <div class="schedulex" ref="calendarContainer"></div>
     </div>
     `
 };
