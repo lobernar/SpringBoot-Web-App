@@ -25,7 +25,6 @@ createApp({
                     return;
                 }
                 const data = await response.json(); // {token: jwt}
-                console.log(data.jwt);
                 sessionStorage.setItem("jwt", data.jwt); // Store token in local storage
                 window.location.href = "/dashboard.html"; // Redirect
             } catch (err) {

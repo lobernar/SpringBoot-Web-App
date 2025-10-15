@@ -10,7 +10,6 @@ export const Calendar = {
 
     mounted(){
         this.$nextTick(async () => {
-            console.log("Render calendar from calendar");
             await this.$emit('render_calendar');
         });
     },

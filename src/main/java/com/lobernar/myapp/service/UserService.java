@@ -27,15 +27,22 @@ public class UserService {
         this.passEncoder = pe;
     }
 
+    private Authentication checkAuthenticated(){
+        // Checks if user is authenticated
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if(auth != null && auth.isAuthenticated()){
+            return auth;
+        }
+        return null;
+    }
+
     public Optional<User> findByUsername(String username){
         return this.userRepo.findByUsername(username);
     }
 
     public User getUser(){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if(auth == null || !auth.isAuthenticated()){
-            return null;
-        }
+        Authentication auth = checkAuthenticated();
+        if(auth == null){return null;}
         UserDetails userDetails = (UserDetails) auth.getPrincipal();
         User user = userRepo.findByUsername(userDetails.getUsername()).orElseThrow(
             () -> new UsernameNotFoundException("User not found"));
@@ -48,10 +55,9 @@ public class UserService {
     }
 
     public User updateUser(@RequestBody Map<String, String> body){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if(auth == null || !auth.isAuthenticated()){
-            return null;
-        }
+        Authentication auth = checkAuthenticated();
+        if(auth == null){return null;}
+
         UserDetails userDetails = (UserDetails) auth.getPrincipal();
         User userToUpdate = userRepo.findByUsername(userDetails.getUsername()).orElseThrow(
             () -> new UsernameNotFoundException("User not found"));
@@ -68,10 +74,9 @@ public class UserService {
     }
 
     public User deleteUser(String username){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if(auth == null || !auth.isAuthenticated()){
-            return null;
-        }
+        Authentication auth = checkAuthenticated();
+        if(auth == null){return null;}
+
         UserDetails userDetails = (UserDetails) auth.getPrincipal();
         User userToDelete = userRepo.findByUsername(userDetails.getUsername()).orElseThrow(
             () -> new UsernameNotFoundException("User not found"));
