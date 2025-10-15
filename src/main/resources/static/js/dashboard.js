@@ -37,10 +37,17 @@ const plugins = [
     dragAndDropPlugin,
 ];
 
-let calendarX = createCalendar({
+const config = {
     views: [viewWeek, viewDay, viewMonthGrid],
     plugins,
-});
+    dayBoundaries: {
+        start: '06:00',
+        end: '18:00',
+    },
+    weekOptions: {gridHeight: 450}
+};
+
+let calendarX = createCalendar(config);
 
 
 /*

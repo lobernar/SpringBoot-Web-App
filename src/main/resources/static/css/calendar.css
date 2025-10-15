@@ -8,8 +8,7 @@
   height: 90vh;
   max-height: 90vh;
   margin: 0 auto;
-  transform: scale(0.9);  /* shrink everything inside */
-  /*transform-origin: top left;  anchor scaling */
+  transform: scale(0.9);  /* shrink everything */
 }
 
 /* override Schedule-X Today button */

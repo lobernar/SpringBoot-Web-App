@@ -40,7 +40,7 @@ export const Calendar = {
     template: 
     `<div class="calendar">   
         <section class="weekly-scheduler">
-            <h2>Weekly Events</h2>
+            <h2>Planned Events</h2>
             <button id="addEventBtn" @click="$emit('toggle_show')">Add Event</button>
             <div v-if="show" class="overlay">
                 <div class="eventForm">
