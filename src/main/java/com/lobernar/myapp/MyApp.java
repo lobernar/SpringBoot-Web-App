@@ -5,8 +5,18 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import io.github.cdimascio.dotenv.Dotenv;;
 
+/**
+ * Main entry point for the Spring Boot application.
+ * Loads environment variables from .env and sets them as system properties before starting Spring.
+ */
+
 @SpringBootApplication
 public class MyApp {
+    /**
+     * Loads .env variables and starts the Spring Boot application.
+     * Sets JWT secret, expiration, and datasource URL as system properties for Spring to use.
+     * @param args command-line arguments
+     */
     public static void main(String[] args) {
         // Load .env before Spring context starts
         Dotenv dotenv = Dotenv.load();

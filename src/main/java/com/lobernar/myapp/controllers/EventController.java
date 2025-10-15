@@ -25,17 +25,31 @@ import com.lobernar.myapp.repositories.EventRepository;
 import com.lobernar.myapp.repositories.UserRepository;
 
 
+/**
+ * Controller for handling event-related API endpoints.
+ * Provides endpoints for creating, retrieving, updating, and deleting events.
+ */
+
 @RestController
 @RequestMapping("/api/events")
 public class EventController {
     private final EventRepository eventRepo;
     private final UserRepository userRepo;
 
+    /**
+     * Constructs an EventController with the specified EventRepository and UserRepository.
+     * @param eventRepo the repository for event operations
+     * @param ur the repository for user operations
+     */
     public EventController(final EventRepository eventRepo, final UserRepository ur) {
         this.eventRepo = eventRepo;
         this.userRepo = ur;
     }
 
+    /**
+     * Retrieves all events for the authenticated user.
+     * @return a ResponseEntity containing a list of EventDTOs for the user
+     */
     @GetMapping("/me")
     public ResponseEntity<List<EventDTO>> getEvent(){
         // Check if user is authenticated
@@ -51,6 +65,11 @@ public class EventController {
         return ResponseEntity.ok(eventRepo.findDTOsByOwner(user));
     }
     
+    /**
+     * Adds a new event for the authenticated user based on the provided request body.
+     * @param body a map containing event properties
+     * @return a ResponseEntity containing the created EventDTO
+     */
     @PostMapping("me/post")
     public ResponseEntity<EventDTO> addEvent(@RequestBody Map<String, String> body) {
         // Check if user is authenticated

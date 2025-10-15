@@ -1,3 +1,8 @@
+/**
+ * Filter for JWT authentication in the Spring Security filter chain.
+ * Extracts and validates JWT tokens from the Authorization header of incoming requests.
+ * Sets the authentication in the SecurityContext if the token is valid.
+ */
 package com.lobernar.myapp.filter;
 
 import java.io.IOException;
@@ -20,18 +25,38 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+
+/**
+ * JwtAuthFilter integrates JWT authentication into the Spring Security filter chain.
+ * It intercepts requests, extracts and validates JWT tokens, and sets authentication context for valid tokens.
+ */
+
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter {
 
     private MyUserDetailService myUserDetailService;
     private JwtUtils jwtUtils;
 
+    /**
+     * Constructor for JwtAuthFilter. Injects MyUserDetailService and JwtUtils.
+     * @param muds MyUserDetailService instance
+     * @param ju JwtUtils instance
+     */
     @Autowired
     public JwtAuthFilter(MyUserDetailService muds, JwtUtils ju){
         this.myUserDetailService = muds;
         this.jwtUtils = ju;
     }
 
+    /**
+     * Filters incoming HTTP requests to extract and validate JWT tokens.
+     * If a valid token is found, sets the authentication in the SecurityContext.
+     * @param request the HTTP request
+     * @param response the HTTP response
+     * @param filterChain the filter chain
+     * @throws ServletException if a servlet error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doFilterInternal(
         @NonNull HttpServletRequest request,
@@ -48,6 +73,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             userId = jwtUtils.extractUserId(jwt);
         }
 
+        // If userId is present and no authentication is set, validate the token and set authentication
         if(userId != null && SecurityContextHolder.getContext().getAuthentication() == null){
             UserDetails userDetails = myUserDetailService.loadUserById(userId);
             if(jwtUtils.validateToken(jwt, userId)){

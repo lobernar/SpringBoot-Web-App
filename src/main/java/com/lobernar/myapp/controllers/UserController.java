@@ -17,9 +17,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-/* 
-    Retrieves user details based on the authenticated token. 
-*/
+/**
+ * Controller for handling user-related API endpoints.
+ * Provides endpoints for retrieving, updating, and deleting the authenticated user.
+ */
 
 @RestController
 @RequestMapping("/api/users/")
@@ -27,11 +28,20 @@ public class UserController {
     private final UserService userService;
     private final JwtUtils jwtUtils;
 
+    /**
+     * Constructor for UserController. Injects UserService and JwtUtils.
+     * @param us UserService instance
+     * @param ju JwtUtils instance
+     */
     public UserController(final UserService us, final JwtUtils ju){
         this.userService = us;
         this.jwtUtils = ju;
     }
 
+    /**
+     * Retrieves the currently authenticated user's details.
+     * @return ResponseEntity containing the User or UNAUTHORIZED status
+     */
     @GetMapping("me/")
     public ResponseEntity<User> getUser(){
         User user = this.userService.getUser();
@@ -41,6 +51,11 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
+    /**
+     * Updates the currently authenticated user's details.
+     * @param body Map containing fields to update
+     * @return ResponseEntity with new JWT or UNAUTHORIZED status
+     */
     @PutMapping("me/edit")
     public ResponseEntity<?> updateUser(@RequestBody Map<String, String> body){
         User updatedUser = this.userService.updateUser(body);
@@ -52,6 +67,11 @@ public class UserController {
         return ResponseEntity.ok(Map.of("jwt", newToken));
     }
 
+    /**
+     * Deletes the currently authenticated user.
+     * @param userName Username of the user to delete
+     * @return ResponseEntity with OK or UNAUTHORIZED status
+     */
     @DeleteMapping("me/delete")
     public ResponseEntity<?> deleteUser(String userName){
         User deletedUser = this.userService.deleteUser(userName);

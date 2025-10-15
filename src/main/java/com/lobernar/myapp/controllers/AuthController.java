@@ -20,15 +20,11 @@ import com.lobernar.myapp.service.UserService;
 import com.lobernar.myapp.config.JwtUtils;
 import com.lobernar.myapp.entities.User;
 
-/*
- *  Handles user registration and login, generating JWT tokens. 
- *  Register (/register)
- *  Encrypts the password.
- *  Saves the user in the database.
- *  Returns a JWT token.
- *  Login (/login)
- *  Authenticates the user.
- *  Generates and returns a JWT token.
+/**
+ * Controller for handling authentication endpoints (login and signup).
+ * Handles user registration and login, generating JWT tokens.
+ * Register (/signup): Encrypts the password, saves the user, returns a JWT token.
+ * Login (/login): Authenticates the user, generates and returns a JWT token.
  */
 
 @RestController
@@ -39,6 +35,12 @@ public class AuthController{
     private final AuthenticationManager authManager;
     private final UserService userService;
 
+    /**
+     * Constructor for AuthController. Injects JwtUtils, AuthenticationManager, and UserService.
+     * @param ju JwtUtils instance
+     * @param am AuthenticationManager instance
+     * @param us UserService instance
+     */
     @Autowired
     public AuthController(JwtUtils ju, AuthenticationManager am, UserService us){
         this.jwtUtils = ju;
@@ -46,6 +48,11 @@ public class AuthController{
         this.userService = us;
     }
 
+    /**
+     * Authenticates a user and returns a JWT token if successful.
+     * @param body Map containing username and password
+     * @return ResponseEntity with JWT token or error message
+     */
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Map<String, String> body) {
         // Deserialize JSON
@@ -73,6 +80,11 @@ public class AuthController{
         }
     }
 
+    /**
+     * Registers a new user, encodes their password, saves them, and returns a JWT token.
+     * @param body Map containing user registration fields
+     * @return ResponseEntity with JWT token
+     */
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody Map<String, String> body){
         String username = body.get("username");

@@ -11,6 +11,12 @@ import com.lobernar.myapp.entities.Event;
 import com.lobernar.myapp.entities.EventDTO;
 import com.lobernar.myapp.entities.User;
 
+/**
+ * Repository interface for event-related database operations.
+* Extends JpaRepository to provide CRUD operations for Event entities.
+* Add custom query methods as needed.
+*/
+
 public interface EventRepository extends CrudRepository<Event, Integer>{
     Optional<Event> findByName(String name);
     List<Event> findByOwner(User user);

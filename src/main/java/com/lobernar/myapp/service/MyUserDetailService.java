@@ -13,17 +13,32 @@ import org.springframework.stereotype.Component;
 import com.lobernar.myapp.entities.User;
 import com.lobernar.myapp.repositories.UserRepository;
 
+
+/**
+ * Service class for loading user-specific data for Spring Security authentication.
+ * Implements UserDetailsService to provide user details from the database.
+ */
+
 @Component
 public class MyUserDetailService implements UserDetailsService{
 
     private final UserRepository userRepo;
 
+    /**
+     * Constructor for MyUserDetailService.
+     * @param ur UserRepository instance for accessing user data.
+     */
     @Autowired
     public MyUserDetailService(UserRepository ur){
         this.userRepo = ur;
     }
 
-    // Load user details by id
+    /**
+     * Load user details by user ID.
+     * @param userId the ID of the user to load.
+     * @return UserDetails object containing user information.
+     * @throws UsernameNotFoundException if the user is not found.
+     */
     public UserDetails loadUserById(Integer userId) throws UsernameNotFoundException {
         User user = userRepo.findById(userId)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with ID: " + userId));
@@ -31,7 +46,12 @@ public class MyUserDetailService implements UserDetailsService{
                     Collections.singletonList(new SimpleGrantedAuthority(user.getRole())));
     }
 
-    // Load user details by username
+    /**
+     * Load user details by username.
+     * @param username the username of the user to load.
+     * @return UserDetails object containing user information.
+     * @throws UsernameNotFoundException if the user is not found.
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> optUser = this.userRepo.findByUsername(username);
